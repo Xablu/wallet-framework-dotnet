@@ -48,7 +48,7 @@
         <MicroElementsSwashbuckleFluentValidationVersion>4.0.0</MicroElementsSwashbuckleFluentValidationVersion>
         <MoqVersion>4.14.5</MoqVersion>
         <MultiformatsBaseVersion>2.0.2</MultiformatsBaseVersion>
-        <NewtonsoftJsonVersion>13.0.1</NewtonsoftJsonVersion>
+        <NewtonsoftJsonVersion>13.0.3</NewtonsoftJsonVersion>
         <NLogConfigVersion>4.7.2</NLogConfigVersion>
         <PollyVersion>8.5.0</PollyVersion>
         <StatelessVersion>5.1.2</StatelessVersion>
@@ -59,5 +59,14 @@
         <SwashbuckleAspNetCoreSwaggerVersion>5.5.1</SwashbuckleAspNetCoreSwaggerVersion>
         <XunitRunnerVisualstudioVersion>2.4.2</XunitRunnerVisualstudioVersion>
         <XunitVersion>2.7.0</XunitVersion>
+        <CoverletCollectorVersion>6.0.0</CoverletCollectorVersion>
+        <MicrosoftAspNetCoreMvcTestingVersion>8.0.0</MicrosoftAspNetCoreMvcTestingVersion>
+        <FsCheckXunitVersion>2.16.6</FsCheckXunitVersion>
+        <MicrosoftCodeAnalysisNetAnalyzersVersion>8.0.0</MicrosoftCodeAnalysisNetAnalyzersVersion>
+        <RoslynatorAnalyzersVersion>4.12.0</RoslynatorAnalyzersVersion>
+        <PeterOCborVersion>4.5.3</PeterOCborVersion>
+        <SdJwtVersion>0.1.0-rc.67</SdJwtVersion>
+        <PeterOCborVersion>4.5.3</PeterOCborVersion>
+        <SpecFlowXunitVersion>3.9.74</SpecFlowXunitVersion>
     </PropertyGroup>
 </Project>

@@ -1,11 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <Description>.NET Core tools for building agent services</Description>
+        <Description>.NET Core tools for building agent services</Description>
         <PackageId>WalletFramework</PackageId>
         <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Hyperledger.Aries.xml</DocumentationFile>
         <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
         <Nullable>enable</Nullable>
         <LangVersion>9.0</LangVersion>
+    </PropertyGroup>
+    <PropertyGroup>
+       <TargetFramework>net9.0</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Flurl" Version="$(FlurlVersion)" />
@@ -14,14 +18,22 @@
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="$(MicrosoftExtensionsHostingVersion)" />
         <PackageReference Include="Microsoft.Extensions.Http" Version="$(MicrosoftExtensionsHttpVersion)" />
         <PackageReference Include="Microsoft.Extensions.Logging" Version="$(MicrosoftExtensionsLoggingVersion)" />
-        <PackageReference Include="Multiformats.Base" Version="2.0.2" />
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+        <PackageReference Include="Multiformats.Base" Version="$(MultiformatsBaseVersion)" />
+        <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" />
         <PackageReference Include="Polly" Version="$(PollyVersion)" />
-        <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
+        <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" /> <!-- Version not in Directory.Build.props -->
         <PackageReference Include="Stateless" Version="$(StatelessVersion)" />
-        <PackageReference Include="System.Collections.Immutable" Version="1.7.1" />
-        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.1" />
+        <PackageReference Include="System.Collections.Immutable" Version="1.7.1" /> <!-- Version not in Directory.Build.props -->
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.1" /> <!-- Version not in Directory.Build.props -->
         <PackageReference Include="System.Reactive.Linq" Version="$(SystemReactiveLinqVersion)" />
+        <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="$(MicrosoftCodeAnalysisNetAnalyzersVersion)">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Roslynator.Analyzers" Version="$(RoslynatorAnalyzersVersion)">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
     </ItemGroup>
     <ItemGroup>
       <Compile Remove="Features\OpenID4VC\VCI\Services\**" />

@@ -138,7 +138,8 @@ namespace Hyperledger.Aries.Agents
             if (messageContext is PackedMessageContext packedMessageContext)
             {
                 (inboundMessageContext, unpacked) = await UnpackAsync(agentContext, packedMessageContext);
-                Logger.LogInformation($"Agent Message Received : {inboundMessageContext.ToJson()}");
+                // Mitigate sensitive data exposure: Log only message type and connection details, not the full payload.
+                Logger.LogInformation($"Agent Message Received. Type: {inboundMessageContext.GetMessageType()}, ConnectionId: {inboundMessageContext.Connection?.Id}");
             }
 
             if (Handlers.Where(handler => handler != null).FirstOrDefault(

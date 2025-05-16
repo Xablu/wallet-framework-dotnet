@@ -84,17 +84,18 @@ namespace Hyperledger.Aries.Storage
                 return new List<T>();
             }
 
-            var records = searchResult.Records.Select(searchItem =>
+            var records = new List<T>();
+            foreach (var searchItem in searchResult.Records)
             {
                 var record = JsonConvert.DeserializeObject<T>(searchItem.Value, _jsonSettings)!;
 
                 foreach (var tag in searchItem.Tags)
                     record.Tags[tag.Key] = tag.Value;
 
-                return record;
-            });
+                records.Add(record);
+            }
 
-            return records.ToList();
+            return records;
         }
 
         /// <inheritdoc />
