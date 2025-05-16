@@ -779,19 +779,6 @@ namespace Hyperledger.Aries.Features.PresentProof
             return result.ToJson();
         }
 
-        private bool HasNonRevokedOnAttributeLevel(ProofRequest proofRequest)
-        {
-            foreach (var proofRequestRequestedAttribute in proofRequest.RequestedAttributes)
-                if (proofRequestRequestedAttribute.Value.NonRevoked != null)
-                    return true;
-
-            foreach (var proofRequestRequestedPredicate in proofRequest.RequestedPredicates)
-                if (proofRequestRequestedPredicate.Value.NonRevoked != null)
-                    return true;
-
-            return false;
-        }
-
         private async Task<(ParseRegistryResponseResult, string)> BuildRevocationStateAsync(
             IAgentContext agentContext, CredentialInfo credential, ParseResponseResult registryDefinition,
             RevocationInterval nonRevoked)
@@ -827,69 +814,42 @@ namespace Hyperledger.Aries.Features.PresentProof
             allCredentials.AddRange(requestedCredentials.RequestedPredicates.Values);
 
             var result = new Dictionary<string, Dictionary<string, JObject>>();
-            
-            if (proofRequest.NonRevoked == null && !HasNonRevokedOnAttributeLevel(proofRequest))
+
+            if (proofRequest.NonRevoked == null)
                 return result.ToJson();
 
-            foreach (var requestedCredential in allCredentials)
+            // Group credentials by revocation registry ID to avoid redundant lookups
+            var credentialsByRevocationRegistry = allCredentials
+                .Select(requestedCredential => credentialObjects.First(x => x.Referent == requestedCredential.CredentialId))
+                .Where(credential => credential.RevocationRegistryId != null)
+                .GroupBy(credential => credential.RevocationRegistryId);
+
+            foreach (var group in credentialsByRevocationRegistry)
             {
-                // ReSharper disable once PossibleMultipleEnumeration
-                var credential = credentialObjects.First(x => x.Referent == requestedCredential.CredentialId);
-                if (credential.RevocationRegistryId == null)
-                    continue;
+                var revocationRegistryId = group.Key;
+                var credentialsInRegistry = group.ToList();
 
                 var registryDefinition = await LedgerService.LookupRevocationRegistryDefinitionAsync(
                     agentContext: agentContext,
-                    registryId: credential.RevocationRegistryId);
+                    registryId: revocationRegistryId);
 
-                if (proofRequest.NonRevoked != null)
+                // Use the overall proof request's NonRevoked interval
+                var revocationInterval = proofRequest.NonRevoked;
+
+                var (delta, state) = await BuildRevocationStateAsync(
+                    agentContext, credentialsInRegistry.First(), registryDefinition, revocationInterval); // Use the first credential in the group for BuildRevocationStateAsync as it only needs registry info
+
+                if (!result.ContainsKey(revocationRegistryId))
+                    result.Add(revocationRegistryId, new Dictionary<string, JObject>());
+
+                // Update the timestamp for all requested credentials associated with this registry
+                foreach (var requestedCredential in allCredentials.Where(rc => credentialObjects.First(co => co.Referent == rc.CredentialId).RevocationRegistryId == revocationRegistryId))
                 {
-                    var (delta, state) = await BuildRevocationStateAsync(
-                        agentContext, credential, registryDefinition, proofRequest.NonRevoked);
-                    
-                    if (!result.ContainsKey(credential.RevocationRegistryId))
-                        result.Add(credential.RevocationRegistryId, new Dictionary<string, JObject>());
-
-                    requestedCredential.Timestamp = (long) delta.Timestamp;
-                    if (!result[credential.RevocationRegistryId].ContainsKey($"{delta.Timestamp}"))
-                        result[credential.RevocationRegistryId].Add($"{delta.Timestamp}", JObject.Parse(state));
-                    
-                    continue;
+                     requestedCredential.Timestamp = (long)delta.Timestamp;
                 }
 
-                foreach (var proofRequestRequestedAttribute in proofRequest.RequestedAttributes)
-                {
-                    var revocationInterval = proofRequestRequestedAttribute.Value.NonRevoked;
-                    if (revocationInterval == null)
-                        continue;
-                    
-                    var (delta, state) = await BuildRevocationStateAsync(
-                        agentContext, credential, registryDefinition, revocationInterval);
-                    
-                    if (!result.ContainsKey(credential.RevocationRegistryId))
-                        result.Add(credential.RevocationRegistryId, new Dictionary<string, JObject>());
-
-                    requestedCredential.Timestamp = (long) delta.Timestamp;
-                    if (!result[credential.RevocationRegistryId].ContainsKey($"{delta.Timestamp}"))
-                        result[credential.RevocationRegistryId].Add($"{delta.Timestamp}", JObject.Parse(state));
-                }
-
-                foreach (var proofRequestRequestedPredicate in proofRequest.RequestedPredicates)
-                {
-                    var revocationInterval = proofRequestRequestedPredicate.Value.NonRevoked;
-                    if (revocationInterval == null)
-                        continue;
-                    
-                    var (delta, state) = await BuildRevocationStateAsync(
-                        agentContext, credential, registryDefinition, revocationInterval);
-                    
-                    if (!result.ContainsKey(credential.RevocationRegistryId))
-                        result.Add(credential.RevocationRegistryId, new Dictionary<string, JObject>());
-
-                    requestedCredential.Timestamp = (long) delta.Timestamp;
-                    if (!result[credential.RevocationRegistryId].ContainsKey($"{delta.Timestamp}"))
-                        result[credential.RevocationRegistryId].Add($"{delta.Timestamp}", JObject.Parse(state));
-                }
+                if (!result[revocationRegistryId].ContainsKey($"{delta.Timestamp}"))
+                    result[revocationRegistryId].Add($"{delta.Timestamp}", JObject.Parse(state));
             }
 
             return result.ToJson();

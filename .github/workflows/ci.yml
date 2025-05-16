@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore
+
+    - name: Run tests with coverage
+      run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+
+    - name: Publish coverage report
+      uses: codecov/codecov-action@v4
+      with:
+        files: ./test/**/*.opencover.xml
+        fail_ci_if_error: true
+
+    - name: Run Static Analysis (Roslyn Analyzers)
+      run: dotnet build --no-restore /t:Rebuild /p:RunAnalyzers=true
+
+    # Placeholder for OWASP ZAP Dynamic Analysis
+    - name: OWASP ZAP Scan
+      run: |
+        echo "Placeholder for running OWASP ZAP scan"
+        # Command to run ZAP scan would go here
+        # Example: docker run -v ${PWD}:/zap/wrk/:rw owasp/zap2docker-stable zap-baseline.py -t http://localhost:5000 -I
+      continue-on-error: true # Allow build to pass even if ZAP finds issues initially
+
+    # Placeholder for OWASP Dependency-Check (SCA)
+    - name: OWASP Dependency-Check Scan
+      run: |
+        echo "Placeholder for running OWASP Dependency-Check scan"
+        # Command to run Dependency-Check would go here
+        # Example: dependency-check.sh --scan . --format HTML,JSON --project "wallet-framework-dotnet" --out .
+      continue-on-error: true # Allow build to pass even if Dependency-Check finds issues initially

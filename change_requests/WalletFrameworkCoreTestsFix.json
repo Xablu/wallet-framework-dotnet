@@ -1,0 +1,6 @@
+{
+  "identifier": "BUG-789",
+  "type": "bug",
+  "target": "WalletFrameworkCore",
+  "description": "Fix build errors in WalletFramework.Core.Tests project so that `dotnet test` runs cleanly"
+}

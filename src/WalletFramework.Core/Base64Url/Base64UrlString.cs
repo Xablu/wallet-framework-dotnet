@@ -8,7 +8,7 @@ public readonly struct Base64UrlString
 {
     private string Value { get; }
 
-    public byte[] AsByteArray => Base64UrlEncoder.DecodeBytes(Value);
+    public byte[] AsByteArray => Base64UrlDecoder.Decode(Value);
 
     public string AsString => Value;
 
@@ -28,7 +28,7 @@ public readonly struct Base64UrlString
     {
         try
         {
-            Base64UrlEncoder.Decode(input);
+            Base64UrlDecoder.Decode(input);
             return new Base64UrlString(input);
         }
         catch (Exception e)

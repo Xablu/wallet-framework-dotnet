@@ -53,11 +53,18 @@ namespace Hyperledger.Aries.Ledger
         public virtual async Task<ParseResponseResult> LookupRevocationRegistryDefinitionAsync(IAgentContext agentContext,
             string registryId)
         {
-            var req = await IndyLedger.BuildGetRevocRegDefRequestAsync(null, registryId);
-            var res = await IndyLedger.SubmitRequestAsync(await agentContext.Pool as Pool, req);
+            async Task<ParseResponseResult> LookupRevocationRegistryDefinition()
+            {
+                var req = await IndyLedger.BuildGetRevocRegDefRequestAsync(null, registryId);
+                var res = await IndyLedger.SubmitRequestAsync(await agentContext.Pool as Pool, req);
 
-            var result = await IndyLedger.ParseGetRevocRegDefResponseAsync(res);
-            return ConvertResult(result);
+                var result = await IndyLedger.ParseGetRevocRegDefResponseAsync(res);
+                return ConvertResult(result);
+            }
+
+            return await ResilienceUtils.RetryPolicyAsync(
+                action: LookupRevocationRegistryDefinition,
+                exceptionPredicate: (IndyException e) => e.SdkErrorCode == 309);
         }
 
         /// <inheritdoc />
@@ -83,26 +90,40 @@ namespace Hyperledger.Aries.Ledger
         public virtual async Task<ParseRegistryResponseResult> LookupRevocationRegistryDeltaAsync(IAgentContext agentContext, string revocationRegistryId,
              long from, long to)
         {
-            var req = await IndyLedger.BuildGetRevocRegDeltaRequestAsync(null, revocationRegistryId, from, to);
-            var res = await IndyLedger.SubmitRequestAsync(await agentContext.Pool as Pool, req);
+            async Task<ParseRegistryResponseResult> LookupRevocationRegistryDelta()
+            {
+                var req = await IndyLedger.BuildGetRevocRegDeltaRequestAsync(null, revocationRegistryId, from, to);
+                var res = await IndyLedger.SubmitRequestAsync(await agentContext.Pool as Pool, req);
 
-            EnsureSuccessResponse(res);
+                EnsureSuccessResponse(res);
 
-            var result = await IndyLedger.ParseGetRevocRegDeltaResponseAsync(res);
-            return ConvertResult(result);
+                var result = await IndyLedger.ParseGetRevocRegDeltaResponseAsync(res);
+                return ConvertResult(result);
+            }
+
+            return await ResilienceUtils.RetryPolicyAsync(
+                action: LookupRevocationRegistryDelta,
+                exceptionPredicate: (IndyException e) => e.SdkErrorCode == 309);
         }
 
         /// <inheritdoc />
         public virtual async Task<ParseRegistryResponseResult> LookupRevocationRegistryAsync(IAgentContext agentContext, string revocationRegistryId,
              long timestamp)
         {
-            var req = await IndyLedger.BuildGetRevocRegRequestAsync(null, revocationRegistryId, timestamp);
-            var res = await IndyLedger.SubmitRequestAsync(await agentContext.Pool as Pool, req);
+            async Task<ParseRegistryResponseResult> LookupRevocationRegistry()
+            {
+                var req = await IndyLedger.BuildGetRevocRegRequestAsync(null, revocationRegistryId, timestamp);
+                var res = await IndyLedger.SubmitRequestAsync(await agentContext.Pool as Pool, req);
 
-            EnsureSuccessResponse(res);
+                EnsureSuccessResponse(res);
 
-            var result = await IndyLedger.ParseGetRevocRegResponseAsync(res);
-            return ConvertResult(result);
+                var result = await IndyLedger.ParseGetRevocRegResponseAsync(res);
+                return ConvertResult(result);
+            }
+
+            return await ResilienceUtils.RetryPolicyAsync(
+                action: LookupRevocationRegistry,
+                exceptionPredicate: (IndyException e) => e.SdkErrorCode == 309);
         }
 
         /// <inheritdoc />
@@ -168,23 +189,37 @@ namespace Hyperledger.Aries.Ledger
         /// <inheritdoc />
         public virtual async Task<string> LookupAttributeAsync(IAgentContext agentContext, string targetDid, string attributeName)
         {
-            var req = await IndyLedger.BuildGetAttribRequestAsync(null, targetDid, attributeName, null, null);
-            var res = await IndyLedger.SubmitRequestAsync(await agentContext.Pool as Pool, req);
+            async Task<string> LookupAttribute()
+            {
+                var req = await IndyLedger.BuildGetAttribRequestAsync(null, targetDid, attributeName, null, null);
+                var res = await IndyLedger.SubmitRequestAsync(await agentContext.Pool as Pool, req);
 
-            var dataJson = JObject.Parse(res)["result"]!["data"]!.ToString();
+                var dataJson = JObject.Parse(res)["result"]!["data"]!.ToString();
 
-            var attribute = JObject.Parse(dataJson)[attributeName]!.ToString();
-            
-            return attribute;
+                var attribute = JObject.Parse(dataJson)[attributeName]!.ToString();
+                
+                return attribute;
+            }
+
+            return await ResilienceUtils.RetryPolicyAsync(
+                action: LookupAttribute,
+                exceptionPredicate: (IndyException e) => e.SdkErrorCode == 309);
         }
 
         /// <inheritdoc />
         public virtual async Task<string> LookupTransactionAsync(IAgentContext agentContext, string ledgerType, int sequenceId)
         {
-            var req = await IndyLedger.BuildGetTxnRequestAsync(null, ledgerType, sequenceId);
-            var res = await IndyLedger.SubmitRequestAsync(await agentContext.Pool as Pool, req);
+            async Task<string> LookupTransaction()
+            {
+                var req = await IndyLedger.BuildGetTxnRequestAsync(null, ledgerType, sequenceId);
+                var res = await IndyLedger.SubmitRequestAsync(await agentContext.Pool as Pool, req);
 
-            return res;
+                return res;
+            }
+
+            return await ResilienceUtils.RetryPolicyAsync(
+                action: LookupTransaction,
+                exceptionPredicate: (IndyException e) => e.SdkErrorCode == 309);
         }
 
         /// <inheritdoc />
@@ -200,24 +235,38 @@ namespace Hyperledger.Aries.Ledger
         /// <inheritdoc />
         public virtual async Task<string> LookupNymAsync(IAgentContext agentContext, string did)
         {
-            var req = await IndyLedger.BuildGetNymRequestAsync(null, did);
-            var res = await IndyLedger.SubmitRequestAsync(await agentContext.Pool as Pool, req);
+            async Task<string> LookupNym()
+            {
+                var req = await IndyLedger.BuildGetNymRequestAsync(null, did);
+                var res = await IndyLedger.SubmitRequestAsync(await agentContext.Pool as Pool, req);
 
-            EnsureSuccessResponse(res);
+                EnsureSuccessResponse(res);
 
-            return res;
+                return res;
+            }
+
+            return await ResilienceUtils.RetryPolicyAsync(
+                action: LookupNym,
+                exceptionPredicate: (IndyException e) => e.SdkErrorCode == 309);
         }
 
         /// <inheritdoc />
         public virtual async Task<IList<AuthorizationRule>> LookupAuthorizationRulesAsync(IAgentContext agentContext)
         {
-            var req = await IndyLedger.BuildGetAuthRuleRequestAsync(null, null, null, null, null, null);
-            var res = await IndyLedger.SubmitRequestAsync(await agentContext.Pool as Pool, req);
+            async Task<IList<AuthorizationRule>> LookupAuthorizationRules()
+            {
+                var req = await IndyLedger.BuildGetAuthRuleRequestAsync(null, null, null, null, null, null);
+                var res = await IndyLedger.SubmitRequestAsync(await agentContext.Pool as Pool, req);
 
-            EnsureSuccessResponse(res);
+                EnsureSuccessResponse(res);
 
-            var jobj = JObject.Parse(res);
-            return jobj["result"]["data"].ToObject<IList<AuthorizationRule>>();
+                var jobj = JObject.Parse(res);
+                return jobj["result"]["data"].ToObject<IList<AuthorizationRule>>();
+            }
+
+            return await ResilienceUtils.RetryPolicyAsync(
+                action: LookupAuthorizationRules,
+                exceptionPredicate: (IndyException e) => e.SdkErrorCode == 309);
         }
 
         private async Task<string> SignAndSubmitAsync(IAgentContext context, string submitterDid, string request, TransactionCost paymentInfo)
