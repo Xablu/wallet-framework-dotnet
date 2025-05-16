@@ -32,12 +32,12 @@
         <MicrosoftExtensionsHostingVersion>3.1.5</MicrosoftExtensionsHostingVersion>
         <MicrosoftExtensionsHttpVersion>3.1.5</MicrosoftExtensionsHttpVersion>
         <MicrosoftExtensionsLoggingVersion>3.1.5</MicrosoftExtensionsLoggingVersion>
-        <MicrosoftNETTestSdkVersion>16.6.1</MicrosoftNETTestSdkVersion>
+        <MicrosoftNETTestSdkVersion>17.10.0</MicrosoftNETTestSdkVersion>
         <SystemReactiveLinqVersion>4.4.1</SystemReactiveLinqVersion>
         <SystemTextJsonVersion>4.7.2</SystemTextJsonVersion>
         <AutofacExtensionsDependencyInjectionVersion>6.0.0</AutofacExtensionsDependencyInjectionVersion>
         <DawnGuardVersion>1.12.0</DawnGuardVersion>
-        <FluentAssertionsVersion>5.10.3</FluentAssertionsVersion>
+        <FluentAssertionsVersion>6.12.0</FluentAssertionsVersion>
         <FluentValidationAspNetCoreVersion>9.2.0</FluentValidationAspNetCoreVersion>
         <FluentValidationVersion>9.2.0</FluentValidationVersion>
         <FlurlVersion>2.8.2</FlurlVersion>
@@ -58,7 +58,7 @@
         <SwashbuckleAspNetCoreSwaggerUIVersion>5.5.1</SwashbuckleAspNetCoreSwaggerUIVersion>
         <SwashbuckleAspNetCoreSwaggerVersion>5.5.1</SwashbuckleAspNetCoreSwaggerVersion>
         <XunitRunnerVisualstudioVersion>2.4.2</XunitRunnerVisualstudioVersion>
-        <XunitVersion>2.7.0</XunitVersion>
+        <XunitVersion>2.9.0</XunitVersion>
         <CoverletCollectorVersion>6.0.0</CoverletCollectorVersion>
         <MicrosoftAspNetCoreMvcTestingVersion>8.0.0</MicrosoftAspNetCoreMvcTestingVersion>
         <FsCheckXunitVersion>2.16.6</FsCheckXunitVersion>

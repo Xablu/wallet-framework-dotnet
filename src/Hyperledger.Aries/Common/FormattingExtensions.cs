@@ -80,7 +80,8 @@ namespace Hyperledger.Aries.Extensions
                 new AgentEndpointJsonConverter(),
                 new AttributeFilterConverter()
             },
-            NullValueHandling = NullValueHandling.Ignore
+            NullValueHandling = NullValueHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.All
         };
 
         /// <summary>
