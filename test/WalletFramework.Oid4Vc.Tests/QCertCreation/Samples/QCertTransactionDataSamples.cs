@@ -1,6 +1,5 @@
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
-using WalletFramework.Core.Base64Url;
 using WalletFramework.Core.Functional;
 
 namespace WalletFramework.Oid4Vc.Tests.QCertCreation.Samples;
@@ -20,10 +19,10 @@ public static class QCertCreationTransactionDataSamples
         },
     }.ToString();
 
-    public static Base64UrlString GetBase64UrlStringSample()
+    public static Core.Base64Url.Base64UrlString GetBase64UrlStringSample()
     {
         var str = JsonSample;
         var encoded = Base64UrlEncoder.Encode(str);
-        return Base64UrlString.FromString(encoded).UnwrapOrThrow();
+        return Core.Base64Url.Base64UrlString.FromString(encoded).UnwrapOrThrow();
     }
 }
