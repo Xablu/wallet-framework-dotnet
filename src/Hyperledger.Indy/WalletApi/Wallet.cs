@@ -76,13 +76,9 @@ public sealed class Wallet : IDisposable
   /// </param>
   public static Task CreateWalletAsync(string config, string credentials)
   {
-    // ParamGuard.NotNullOrWhiteSpace(config, nameof (config));
-    // ParamGuard.NotNullOrWhiteSpace(credentials, nameof (credentials));
-    // TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>();
-    // CallbackHelper.CheckResult(NativeMethods.indy_create_wallet(PendingCommands.Add<bool>(taskCompletionSource), config, credentials, CallbackHelper.TaskCompletingNoValueCallback));
-    // return (Task) taskCompletionSource.Task;
-    
-    return Task.CompletedTask;
+      ParamGuard.NotNullOrWhiteSpace(config, nameof(config));
+      ParamGuard.NotNullOrWhiteSpace(credentials, nameof(credentials));
+      return NativeMethods.indy_create_wallet(config, credentials);
   }
 
   /// <summary>
@@ -123,14 +119,12 @@ public sealed class Wallet : IDisposable
   /// 
   ///   }
   /// </param>
-  public static Task<Wallet> OpenWalletAsync(string config, string credentials)
+  public static async Task<Wallet> OpenWalletAsync(string config, string credentials)
   {
-    // ParamGuard.NotNullOrWhiteSpace(config, nameof (config));
-    // ParamGuard.NotNullOrWhiteSpace(credentials, nameof (credentials));
-    // TaskCompletionSource<Wallet> taskCompletionSource = new TaskCompletionSource<Wallet>();
-    // CallbackHelper.CheckResult(NativeMethods.indy_open_wallet(PendingCommands.Add<Wallet>(taskCompletionSource), config, credentials, Wallet.OpenWalletCallback));
-    // return taskCompletionSource.Task;
-    return Task.FromResult(new Wallet(-1));
+      ParamGuard.NotNullOrWhiteSpace(config, nameof(config));
+      ParamGuard.NotNullOrWhiteSpace(credentials, nameof(credentials));
+      int handle = await NativeMethods.indy_open_wallet(config, credentials);
+      return new Wallet(handle);
   }
 
   /// <summary>
@@ -281,20 +275,20 @@ public sealed class Wallet : IDisposable
   /// <returns>An asynchronous <see cref="T:System.Threading.Tasks.Task" /> with no return value that completes when the operation completes.</returns>
   public Task CloseAsync()
   {
-    // this.IsOpen = false;
-    // TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>();
-    // CallbackHelper.CheckResult(NativeMethods.indy_close_wallet(PendingCommands.Add<bool>(taskCompletionSource), this.Handle, CallbackHelper.TaskCompletingNoValueCallback));
-    // GC.SuppressFinalize((object) this);
-    // return (Task) taskCompletionSource.Task;
-    return Task.CompletedTask;
+      this.IsOpen = false;
+      return NativeMethods.indy_close_wallet(this.Handle);
   }
 
   /// <summary>Disposes of resources.</summary>
-  public async void Dispose()
+  public async Task DisposeAsync()
   {
-    if (!this.IsOpen)
-      return;
-    await this.CloseAsync();
+      if (this.IsOpen)
+          await CloseAsync();
+  }
+  
+  public void Dispose()
+  {
+      DisposeAsync().GetAwaiter().GetResult();
   }
 
   /// <summary>

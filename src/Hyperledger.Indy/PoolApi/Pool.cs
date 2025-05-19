@@ -36,9 +36,9 @@ public sealed class Pool : IDisposable
     /// <summary>
     /// Closes the open pool and frees resources.
     /// </summary>
-    public Task CloseAsync()
+    public Task ClosePoolLedgerAsync()
     {
-        return Task.CompletedTask;
+        return NativeMethods.ClosePoolLedgerAsync(this.Handle);
     }
     
     /// <summary>
@@ -46,5 +46,14 @@ public sealed class Pool : IDisposable
     /// </summary>
     public void Dispose()
     {
+    }
+    public Task SubmitRequestAsync(string request)
+    {
+        return NativeMethods.SubmitRequestAsync(this.Handle, request);
+    }
+
+    public Task<string> ParseResponseAsync(string response)
+    {
+        return NativeMethods.ParseResponseAsync(response);
     }
 }
