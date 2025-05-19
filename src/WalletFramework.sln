@@ -59,6 +59,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WalletFramework.IsoProximit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WalletFramework.IsoProximity.Tests", "WalletFramework.IsoProximity.Tests\WalletFramework.IsoProximity.Tests.csproj", "{D5EE1F6B-F8E2-4B4D-AF54-5F64762D16EC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hyperledger.Indy", "Hyperledger.Indy\Hyperledger.Indy.csproj", "{56B46075-6A27-42F3-8196-4618E761D1EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -153,6 +155,10 @@ Global
 		{D5EE1F6B-F8E2-4B4D-AF54-5F64762D16EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5EE1F6B-F8E2-4B4D-AF54-5F64762D16EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5EE1F6B-F8E2-4B4D-AF54-5F64762D16EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56B46075-6A27-42F3-8196-4618E761D1EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56B46075-6A27-42F3-8196-4618E761D1EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56B46075-6A27-42F3-8196-4618E761D1EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56B46075-6A27-42F3-8196-4618E761D1EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -181,6 +187,7 @@ Global
 		{93B3ED00-4158-4F79-9532-D3E940630A8A} = {02ADBA96-A50C-44F0-A9D9-FA0629AA2DF4}
 		{0CF48F14-6FC3-4AD9-875D-27A96DAB34D3} = {A1DD69B3-DC35-43CF-AE14-D751722F074A}
 		{D5EE1F6B-F8E2-4B4D-AF54-5F64762D16EC} = {02ADBA96-A50C-44F0-A9D9-FA0629AA2DF4}
+		{56B46075-6A27-42F3-8196-4618E761D1EA} = {73FF6DBD-5847-4F2D-94BE-196AE9A80228}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4FFA80F9-ADC6-40DB-BBD1-A522B8A68560}

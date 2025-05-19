@@ -27,5 +27,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Hyperledger.Aries.AspNetCore.Contracts\Hyperledger.Aries.AspNetCore.Contracts.csproj" />
     <ProjectReference Include="..\Hyperledger.Aries\Hyperledger.Aries.csproj" />
+    <ProjectReference Include="..\Hyperledger.Indy\Hyperledger.Indy.csproj" />
   </ItemGroup>
 </Project>

@@ -9,8 +9,8 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Flurl" Version="$(FlurlVersion)" />
-        <PackageReference Include="Hyperledger.Indy-VDR" Version="$(HyperledgerIndyVdrVersion)" />
-        <PackageReference Include="WalletFramework.Indy.Sdk" Version="$(WalletFrameworkIndySdkVersion)" />
+<!--        <PackageReference Include="Hyperledger.Indy-VDR" Version="$(HyperledgerIndyVdrVersion)" />-->
+<!--        <PackageReference Include="WalletFramework.Indy.Sdk" Version="$(WalletFrameworkIndySdkVersion)" />-->
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="$(MicrosoftExtensionsHostingVersion)" />
         <PackageReference Include="Microsoft.Extensions.Http" Version="$(MicrosoftExtensionsHttpVersion)" />
         <PackageReference Include="Microsoft.Extensions.Logging" Version="$(MicrosoftExtensionsLoggingVersion)" />
@@ -22,6 +22,9 @@
         <PackageReference Include="System.Collections.Immutable" Version="1.7.1" />
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.1" />
         <PackageReference Include="System.Reactive.Linq" Version="$(SystemReactiveLinqVersion)" />
+
+<!--     This should do it   -->
+        <ProjectReference Include="..\Hyperledger.Indy\Hyperledger.Indy.csproj" />
     </ItemGroup>
     <ItemGroup>
       <Compile Remove="Features\OpenID4VC\VCI\Services\**" />

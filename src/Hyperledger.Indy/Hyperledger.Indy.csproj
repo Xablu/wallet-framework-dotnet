@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <Description>.NET Core tools for building agent services</Description>
+        <PackageId>Hyperledger.Indy</PackageId>
+        <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Hyperledger.Indy.xml</DocumentationFile>
+        <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+        <Nullable>enable</Nullable>
+        <LangVersion>12.0</LangVersion>
+    </PropertyGroup>
+  
+    
+</Project>
