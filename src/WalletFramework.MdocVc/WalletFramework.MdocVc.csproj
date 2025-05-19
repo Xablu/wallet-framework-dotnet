@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Hyperledger.Aries\Hyperledger.Aries.csproj" />
+        <ProjectReference Include="..\Hyperledger.XAries\Hyperledger.XAries.csproj" />
         <ProjectReference Include="..\WalletFramework.MdocLib\WalletFramework.MdocLib.csproj" />
     </ItemGroup>
 </Project>

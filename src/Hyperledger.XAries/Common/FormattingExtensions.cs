@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Hyperledger.Aries.Agents;
-using Hyperledger.Aries.Features.PresentProof;
+// using Hyperledger.Aries.Agents;
+// using Hyperledger.Aries.Features.PresentProof;
 using Hyperledger.Aries.Utils;
 using Newtonsoft.Json;
 
@@ -51,13 +51,13 @@ namespace Hyperledger.Aries.Extensions
                 ? throw new Exception("Use GetUTF8Bytes() extension for string types")
                 : GetUTF8Bytes(ToJson(value));
 
-        /// <summary>
-        /// Converts the specified string encoded as binary data as base-64 digits,
-        /// to an equivalent 8-bit unsigned integer array.</summary>
-        /// <param name="value">The value.</param>
-        /// <returns></returns>
-        public static byte[] GetBytesFromBase64(this string value) => Base64UrlEncoder.DecodeBytes(value);
-
+        // /// <summary>
+        // /// Converts the specified string encoded as binary data as base-64 digits,
+        // /// to an equivalent 8-bit unsigned integer array.</summary>
+        // /// <param name="value">The value.</param>
+        // /// <returns></returns>
+        // public static byte[] GetBytesFromBase64(this string value) => Base64UrlEncoder.DecodeBytes(value);
+        //
         /// <summary>
         /// Converts an array of 8-bit unsigned integers to its equivalent string
         /// representation that is encoded with base-64 digits.</summary>
@@ -76,9 +76,9 @@ namespace Hyperledger.Aries.Extensions
         {
             Converters = new List<JsonConverter>
             {
-                new AgentMessageWriter(),
-                new AgentEndpointJsonConverter(),
-                new AttributeFilterConverter()
+                // new AgentMessageWriter(),
+                // new AgentEndpointJsonConverter(),
+                // new AttributeFilterConverter()
             },
             NullValueHandling = NullValueHandling.Ignore
         };
@@ -100,19 +100,19 @@ namespace Hyperledger.Aries.Extensions
         public static string ToJson(this object obj, JsonSerializerSettings settings) =>
             JsonConvert.SerializeObject(obj, settings);
 
-        /// <summary>
-        /// Converts a string to Base64Url representation.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>The value Base64Url encoded.</returns>
-        public static string ToBase64Url(this string value) => Base64UrlEncoder.Encode(value);
-
-        /// <summary>
-        /// Converts a string from Base64Url representation.
-        /// </summary>
-        /// <param name="value">The Base64Url value.</param>
-        /// <returns>The value decoded.</returns>
-        public static string FromBase64Url(this string value) => Base64UrlEncoder.Decode(value);
+        // /// <summary>
+        // /// Converts a string to Base64Url representation.
+        // /// </summary>
+        // /// <param name="value">The value.</param>
+        // /// <returns>The value Base64Url encoded.</returns>
+        // public static string ToBase64Url(this string value) => Base64UrlEncoder.Encode(value);
+        //
+        // /// <summary>
+        // /// Converts a string from Base64Url representation.
+        // /// </summary>
+        // /// <param name="value">The Base64Url value.</param>
+        // /// <returns>The value decoded.</returns>
+        // public static string FromBase64Url(this string value) => Base64UrlEncoder.Decode(value);
 
         /// <summary>
         /// Convert a byte array into a hex string

@@ -1,5 +1,5 @@
 ﻿using System;
-using Hyperledger.Aries.Features.Handshakes.Common;
+// using Hyperledger.Aries.Features.Handshakes.Common;
 using Hyperledger.Aries.Storage;
 
 namespace Hyperledger.Aries
@@ -85,20 +85,20 @@ namespace Hyperledger.Aries
             ErrorCode = errorCode;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AriesFrameworkException"/> class.
-        /// </summary>
-        /// <param name="errorCode">The error code.</param>
-        /// <param name="message">The message.</param>
-        /// <param name="contextRecord"></param>
-        /// <param name="connectionRecord"></param>
-        public AriesFrameworkException(ErrorCode errorCode, string message, RecordBase contextRecord, ConnectionRecord connectionRecord) :
-            base(message)
-        {
-            ErrorCode = errorCode;
-            ContextRecord = contextRecord;
-            ConnectionRecord = connectionRecord;
-        }
+        // /// <summary>
+        // /// Initializes a new instance of the <see cref="AriesFrameworkException"/> class.
+        // /// </summary>
+        // /// <param name="errorCode">The error code.</param>
+        // /// <param name="message">The message.</param>
+        // /// <param name="contextRecord"></param>
+        // /// <param name="connectionRecord"></param>
+        // public AriesFrameworkException(ErrorCode errorCode, string message, RecordBase contextRecord, ConnectionRecord connectionRecord) :
+        //     base(message)
+        // {
+        //     ErrorCode = errorCode;
+        //     ContextRecord = contextRecord;
+        //     ConnectionRecord = connectionRecord;
+        // }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AriesFrameworkException"/> class.

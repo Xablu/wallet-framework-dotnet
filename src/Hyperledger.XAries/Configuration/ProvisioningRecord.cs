@@ -99,9 +99,9 @@ namespace Hyperledger.Aries.Configuration
         public string IssuerSeed { get; set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="IndyTaaAcceptance" /> for this agent
-        /// </summary>
-        /// <value></value>
-        public IndyTaaAcceptance TaaAcceptance { get; set; }
+        // /// Gets or sets the <see cref="IndyTaaAcceptance" /> for this agent
+        // /// </summary>
+        // /// <value></value>
+        // public IndyTaaAcceptance TaaAcceptance { get; set; }
     }
 }
