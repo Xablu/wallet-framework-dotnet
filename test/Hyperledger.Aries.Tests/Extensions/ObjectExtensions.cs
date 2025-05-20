@@ -10,7 +10,7 @@ namespace Hyperledger.Aries.Tests.Extensions
         {
             var name = ((MemberExpression)property.Body).Member.Name;
         
-            PropertyInfo propertyInfo = typeof(T).GetProperty(name);
+            PropertyInfo? propertyInfo = typeof(T).GetProperty(name);
             if (propertyInfo == null) return;
             propertyInfo.SetValue(member, value);
         }

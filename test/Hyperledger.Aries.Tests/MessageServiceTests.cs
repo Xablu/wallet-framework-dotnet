@@ -32,7 +32,7 @@ namespace Hyperledger.Aries.Tests
         private string Config = "{\"id\":\"" + Guid.NewGuid() + "\"}";
         private const string WalletCredentials = "{\"key\":\"test_wallet_key\"}";
 
-        private Wallet _wallet;
+        private Wallet? _wallet = null;
 
         private readonly IMessageService _messagingService;
 

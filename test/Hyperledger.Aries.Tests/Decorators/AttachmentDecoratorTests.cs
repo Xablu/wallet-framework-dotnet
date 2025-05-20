@@ -18,7 +18,7 @@ namespace Hyperledger.Aries.Tests.Decorators
             var message = JsonConvert.DeserializeObject<ConnectionRequestMessage>(json,
                     new AgentMessageReader<ConnectionRequestMessage>());
 
-            var decorator = message.GetDecorator<AttachDecorator>("attach");
+            var decorator = message.GetDecorator<AttachDecorator>("attach")!;
 
             Assert.NotNull(decorator);
         }
@@ -45,7 +45,7 @@ namespace Hyperledger.Aries.Tests.Decorators
             var jobj = JObject.Parse(message.ToJson());
 
             Assert.NotNull(jobj["~attach"]);
-            Assert.Equal("file1", jobj["~attach"].First["nickname"]);
+            Assert.Equal("file1", jobj["~attach"]!.First!["nickname"]);
         }
 
         [Fact]
@@ -59,7 +59,7 @@ namespace Hyperledger.Aries.Tests.Decorators
 
             Assert.NotNull(decorator);
 
-            var file = message.GetAttachment("file1");
+            var file = message.GetAttachment("file1")!;
             Assert.NotNull(file);
 
             var file2 = message.GetAttachment("invalid");
@@ -77,7 +77,7 @@ namespace Hyperledger.Aries.Tests.Decorators
 
             Assert.NotNull(decorator);
 
-            var file = message.GetAttachment("file1");
+            var file = message.GetAttachment("file1")!;
             Assert.NotNull(file);
 
             message.RemoveAttachment("file1");

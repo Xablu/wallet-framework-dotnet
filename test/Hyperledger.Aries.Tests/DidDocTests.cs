@@ -30,7 +30,7 @@ namespace Hyperledger.Aries.Tests
 
             var result = JsonConvert.DeserializeObject<DidDoc>(jsonDidDoc);
 
-            Assert.True(result.Context == "https://w3id.org/did/v1");
+            Assert.True(result!.Context == "https://w3id.org/did/v1");
             Assert.True(result.Keys.Count == 1);
             Assert.True(result.Services.Count == 1);
         }
@@ -51,7 +51,7 @@ namespace Hyperledger.Aries.Tests
 
             var result = JsonConvert.DeserializeObject<DidDoc>(jsonDidDoc);
 
-            Assert.True(result.Context == "https://w3id.org/did/v1");
+            Assert.True(result!.Context == "https://w3id.org/did/v1");
             Assert.True(result.Keys.Count == 1);
             Assert.True(result.Services.Count == 0);
         }

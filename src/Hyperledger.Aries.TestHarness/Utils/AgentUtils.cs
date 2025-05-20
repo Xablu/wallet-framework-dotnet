@@ -7,7 +7,7 @@ using Hyperledger.Indy.WalletApi;
 
 namespace Hyperledger.TestHarness.Utils
 {
-    public class AgentUtils
+    public static class AgentUtils
     {
         public static async Task<DefaultAgentContext> Create(string config, string credentials, bool withPool = false, IList<MessageType> supportedMessageTypes = null, bool useMessageTypesHttps = false)
         {

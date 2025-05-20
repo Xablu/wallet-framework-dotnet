@@ -60,7 +60,7 @@ namespace Hyperledger.Aries.Tests.Payments
 
             // check beginning balance
             await paymentService.RefreshBalanceAsync(Context, address[0]);
-            Assert.Equal(address[0].Balance, beginningAmount);
+            Assert.Equal(beginningAmount, address[0].Balance);
 
             //transfer an amount of tokens to another address twice in a row
             // --- Payment 1 ---

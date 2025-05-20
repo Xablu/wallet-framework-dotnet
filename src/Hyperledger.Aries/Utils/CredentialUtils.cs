@@ -13,7 +13,7 @@ namespace Hyperledger.Aries.Utils
     /// <summary>
     /// Credential utilities
     /// </summary>
-    public class CredentialUtils
+    public static class CredentialUtils
     {
         /// <summary>
         /// Formats the credential values into a JSON usable with the <see cref="AnonCreds"/> API

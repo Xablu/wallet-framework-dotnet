@@ -6,7 +6,7 @@ using Hyperledger.Indy.PoolApi;
 
 namespace Hyperledger.TestHarness.Utils
 {
-    public class PoolUtils
+    public static class PoolUtils
     {
         private static IPoolService poolService = new DefaultPoolService();
         private static Pool pool;

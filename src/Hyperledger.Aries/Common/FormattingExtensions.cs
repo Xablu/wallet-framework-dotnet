@@ -81,7 +81,7 @@ namespace Hyperledger.Aries.Extensions
                 new AttributeFilterConverter()
             },
             NullValueHandling = NullValueHandling.Ignore,
-            TypeNameHandling = TypeNameHandling.All
+            TypeNameHandling = TypeNameHandling.None
         };
 
         /// <summary>

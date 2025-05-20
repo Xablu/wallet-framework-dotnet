@@ -25,10 +25,10 @@ namespace Hyperledger.Aries.Tests
 
             await Task.WhenAll(openWalletTask1, openWalletTask2, openWalletTask3, openWalletTask4);
 
-            Assert.True(openWalletTask1.Result.IsOpen);
-            Assert.True(openWalletTask2.Result.IsOpen);
-            Assert.True(openWalletTask3.Result.IsOpen);
-            Assert.True(openWalletTask4.Result.IsOpen);
+            Assert.True((await openWalletTask1).IsOpen);
+            Assert.True((await openWalletTask2).IsOpen);
+            Assert.True((await openWalletTask3).IsOpen);
+            Assert.True((await openWalletTask4).IsOpen);
         }
 
         [Fact]

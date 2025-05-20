@@ -293,7 +293,7 @@ namespace Hyperledger.Aries.Features.IssueCredential
             ConnectionRecord connection)
         {
             var offerAttachment = credentialOffer.Offers.FirstOrDefault(x => x.Id == "libindy-cred-offer-0")
-                                  ?? throw new ArgumentNullException(nameof(CredentialOfferMessage.Offers));
+                                   ?? throw new ArgumentException("No offer attachment found", nameof(credentialOffer));
 
             var offerJson = offerAttachment.Data.Base64.GetBytesFromBase64().GetUTF8String();
             var offer = JObject.Parse(offerJson);
@@ -438,7 +438,7 @@ namespace Hyperledger.Aries.Features.IssueCredential
             async Task<string> ProcessCredential()
             {
                 var credentialAttachment = credential.Credentials.FirstOrDefault(x => x.Id == "libindy-cred-0")
-                                           ?? throw new ArgumentException("Credential attachment not found");
+                                                ?? throw new ArgumentException("Credential attachment not found", nameof(credential));
 
                 var credentialJson = credentialAttachment.Data.Base64.GetBytesFromBase64().GetUTF8String();
                 var credentialJobj = JObject.Parse(credentialJson);
@@ -716,7 +716,8 @@ namespace Hyperledger.Aries.Features.IssueCredential
             {
                 revocationRecord =
                     await RecordService.GetAsync<RevocationRegistryRecord>(agentContext.Wallet,
-                        definitionRecord.CurrentRevocationRegistryId);
+                        definitionRecord.CurrentRevocationRegistryId ??
+                        throw new InvalidOperationException("CurrentRevocationRegistryId is not set"));
                 tailsReader = await TailsService.OpenTailsAsync(revocationRecord.TailsFile);
             }
 

@@ -8,7 +8,7 @@ namespace Hyperledger.Aries.Tests
 {
     public abstract class PoolServiceTests : TestSingleWallet
     {
-        protected TestSingleWallet _fixture;
+        protected TestSingleWallet? _fixture = null;
         
         [Fact(DisplayName = "Get Transaction Author Agreement from ledger if exists")]
         public async Task GetTaaFromLedger()

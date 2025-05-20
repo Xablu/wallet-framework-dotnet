@@ -25,7 +25,7 @@ namespace Hyperledger.Aries.Tests
 
             var obj = JsonConvert.DeserializeObject<ConnectionRecord>(json);
             
-            Assert.Equal(0, obj.RecordVersion);
+            Assert.Equal(0, obj!.RecordVersion);
         }
 
         [Fact]
@@ -49,7 +49,7 @@ namespace Hyperledger.Aries.Tests
 
             var result = await recordService.GetAsync<ConnectionRecord>(Context.Wallet, record.Id);
             
-            Assert.Equal(ConnectionRole.Inviter, result.Role);
+            Assert.Equal(ConnectionRole.Inviter, result!.Role);
         }
         
         [Fact]
@@ -61,7 +61,7 @@ namespace Hyperledger.Aries.Tests
 
             var result = await recordService.GetAsync<ConnectionRecord>(Context.Wallet, record.Id);
             
-            Assert.Equal(HandshakeProtocol.Connections, result.HandshakeProtocol);
+            Assert.Equal(HandshakeProtocol.Connections, result!.HandshakeProtocol);
         }
         
         [Fact]
@@ -73,7 +73,7 @@ namespace Hyperledger.Aries.Tests
 
             var result = await recordService.GetAsync<ConnectionRecord>(Context.Wallet, record.Id);
             
-            Assert.Equal(HandshakeProtocol.DidExchange, result.HandshakeProtocol);
+            Assert.Equal(HandshakeProtocol.DidExchange, result!.HandshakeProtocol);
         }
     }
 }

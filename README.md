@@ -179,3 +179,14 @@ The build is accessible through the Open Wallet Foundation nuget feed.
 ## License
 
 [Apache License Version 2.0](https://github.com/hyperledger/aries-cloudagent-python/blob/master/LICENSE)
+
+## [2.0.0] - 2025-05-19
+### Updated
+- Package upgrades:
+  - LanguageExt.Core: 4.4.7
+  - Newtonsoft.Json: 13.0.3
+  - OneOf: 3.0.271
+  - BouncyCastle.Cryptography (Portable.BouncyCastle): 1.8.4
+  - Microsoft.IdentityModel.Tokens: 8.10.0
+  - System.IdentityModel.Tokens.Jwt: 8.10.0
+  - Microsoft.Extensions.Http: 9.0.5

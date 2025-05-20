@@ -24,8 +24,8 @@ namespace Hyperledger.Aries.Tests.Protocols
         private readonly string _receiverConfig = $"{{\"id\":\"{Guid.NewGuid()}\"}}";
         private const string Credentials = "{\"key\":\"test_wallet_key\"}";
         
-        private IAgentContext _sender;
-        private IAgentContext _receiver;
+        private IAgentContext? _sender = null;
+        private IAgentContext? _receiver = null;
 
         private readonly IOutOfBandService _outOfBandService;
         private readonly Mock<IEventAggregator> _eventAggregator;

@@ -30,8 +30,8 @@
         <MicrosoftAspNetCoreHttpVersion>2.2.2</MicrosoftAspNetCoreHttpVersion>
         <MicrosoftCodeAnalysisFxCopAnalyzersVersion>3.0.0</MicrosoftCodeAnalysisFxCopAnalyzersVersion>
         <MicrosoftExtensionsHostingVersion>3.1.5</MicrosoftExtensionsHostingVersion>
-        <MicrosoftExtensionsHttpVersion>3.1.5</MicrosoftExtensionsHttpVersion>
-        <MicrosoftExtensionsLoggingVersion>3.1.5</MicrosoftExtensionsLoggingVersion>
+        <MicrosoftExtensionsHttpVersion>9.0.5</MicrosoftExtensionsHttpVersion>
+        <MicrosoftExtensionsLoggingVersion>9.0.5</MicrosoftExtensionsLoggingVersion>
         <MicrosoftNETTestSdkVersion>17.10.0</MicrosoftNETTestSdkVersion>
         <SystemReactiveLinqVersion>4.4.1</SystemReactiveLinqVersion>
         <SystemTextJsonVersion>4.7.2</SystemTextJsonVersion>
@@ -52,6 +52,7 @@
         <NLogConfigVersion>4.7.2</NLogConfigVersion>
         <PollyVersion>8.5.0</PollyVersion>
         <StatelessVersion>5.1.2</StatelessVersion>
+        <BouncyCastleCryptographyVersion>1.8.4</BouncyCastleCryptographyVersion>
         <SwashbuckleAspNetCoreAnnotationsVersion>5.5.1</SwashbuckleAspNetCoreAnnotationsVersion>
         <SwashbuckleAspNetCoreFiltersVersion>5.1.2</SwashbuckleAspNetCoreFiltersVersion>
         <SwashbuckleAspNetCoreSwaggerGenVersion>5.5.1</SwashbuckleAspNetCoreSwaggerGenVersion>

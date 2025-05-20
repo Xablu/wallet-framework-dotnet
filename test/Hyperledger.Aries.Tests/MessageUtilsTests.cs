@@ -23,10 +23,10 @@ namespace Hyperledger.Aries.Tests
         [Fact]
         public void EncodeMessageToUrlThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => MessageUtils.EncodeMessageToUrlFormat((string)null, new ConnectionInvitationMessage()));
-            Assert.Throws<ArgumentNullException>(() => MessageUtils.EncodeMessageToUrlFormat((Uri)null, new ConnectionInvitationMessage()));
+            Assert.Throws<ArgumentNullException>(() => MessageUtils.EncodeMessageToUrlFormat((string?)null!, new ConnectionInvitationMessage()));
+            Assert.Throws<ArgumentNullException>(() => MessageUtils.EncodeMessageToUrlFormat((Uri?)null!, new ConnectionInvitationMessage()));
             Assert.Throws<ArgumentNullException>(() => MessageUtils.EncodeMessageToUrlFormat("", new ConnectionInvitationMessage()));
-            Assert.Throws<ArgumentNullException>(() => MessageUtils.EncodeMessageToUrlFormat(new Uri("http://example.com"), (ConnectionInvitationMessage)null));
+            Assert.Throws<ArgumentNullException>(() => MessageUtils.EncodeMessageToUrlFormat(new Uri("http://example.com"), null!));
         }
 
         [Fact]

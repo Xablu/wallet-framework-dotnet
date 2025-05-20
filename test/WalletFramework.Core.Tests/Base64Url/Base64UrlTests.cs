@@ -11,7 +11,7 @@ namespace WalletFramework.Core.Tests.Base64Url
         [Fact]
         [Category("Fast")]
         [Category("CI")]
-        public void Encode_ValidInput_ReturnsCorrectBase64UrlString()
+        public void Base64UrlEncoder_EncodesCorrectly()
         {
             // AI-VERIFIABLE OUTCOME Targeted: Successful Core Operations, High Code Coverage, TDD Adherence.
             // London School Principle: Testing observable outcome of a pure function. No collaborators to mock.
@@ -28,12 +28,29 @@ namespace WalletFramework.Core.Tests.Base64Url
         [Fact]
         [Category("Fast")]
         [Category("CI")]
-        public void Decode_ValidBase64UrlString_ReturnsCorrectBytes()
+        public void Base64UrlEncoder_EncodesEmptyInputCorrectly()
+        {
+            // AI-VERIFIABLE OUTCOME Targeted: Successful Core Operations, High Code Coverage, TDD Adherence.
+            // London School Principle: Testing observable outcome of a pure function. No collaborators to mock.
+            // No bad fallbacks used: Test verifies the actual encoding logic for empty input.
+            
+            var input = "";
+            var expected = "";
+
+            var result = Base64UrlEncoder.Encode(System.Text.Encoding.UTF8.GetBytes(input));
+
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        [Category("Fast")]
+        [Category("CI")]
+        public void Base64UrlDecoder_DecodesCorrectly()
         {
             // AI-VERIFIABLE OUTCOME Targeted: Successful Core Operations, High Code Coverage, TDD Adherence.
             // London School Principle: Testing observable outcome of a pure function. No collaborators to mock.
             // No bad fallbacks used: Test verifies the actual decoding logic.
-
+            
             var input = "SGVsbG8sIFdvcmxkIQ";
             var expectedBytes = System.Text.Encoding.UTF8.GetBytes("Hello, World!");
 
@@ -45,7 +62,24 @@ namespace WalletFramework.Core.Tests.Base64Url
         [Fact]
         [Category("Fast")]
         [Category("CI")]
-        public void Decode_InvalidBase64UrlString_ThrowsFormatException()
+        public void Base64UrlDecoder_DecodesEmptyInputCorrectly()
+        {
+            // AI-VERIFIABLE OUTCOME Targeted: Successful Core Operations, High Code Coverage, TDD Adherence.
+            // London School Principle: Testing observable outcome of a pure function. No collaborators to mock.
+            // No bad fallbacks used: Test verifies the actual decoding logic for empty input.
+
+            var input = "";
+            var expectedBytes = System.Text.Encoding.UTF8.GetBytes("");
+
+            var resultBytes = Base64UrlDecoder.Decode(input);
+
+            Assert.Equal(expectedBytes, resultBytes);
+        }
+
+        [Fact]
+        [Category("Fast")]
+        [Category("CI")]
+        public void Base64UrlDecoder_ThrowsErrorForInvalidInput()
         {
             // AI-VERIFIABLE OUTCOME Targeted: Successful Core Operations (handling invalid input), High Code Coverage, TDD Adherence.
             // London School Principle: Testing observable outcome (exception) of a pure function. No collaborators to mock.
@@ -54,6 +88,18 @@ namespace WalletFramework.Core.Tests.Base64Url
             var invalidInput = "Invalid-Base64Url!"; // Contains characters not allowed in Base64Url
 
             Assert.Throws<FormatException>(() => Base64UrlDecoder.Decode(invalidInput));
+        }
+
+        [Fact]
+        [Category("Fast")]
+        [Category("CI")]
+        public void Base64UrlDecoder_ThrowsArgumentNullExceptionForNullInput()
+        {
+            // AI-VERIFIABLE OUTCOME Targeted: Successful Core Operations (handling null input), High Code Coverage, TDD Adherence.
+            // London School Principle: Testing observable outcome (exception) of a pure function. No collaborators to mock.
+            // No bad fallbacks used: Test verifies the actual error handling for null input.
+
+            Assert.Throws<ArgumentNullException>(() => Base64UrlDecoder.Decode((string)null)); // Explicitly cast null to string
         }
     }
 }

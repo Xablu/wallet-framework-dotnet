@@ -13,8 +13,8 @@ namespace Hyperledger.Aries.Tests.Integration
         WalletConfiguration config2 = new WalletConfiguration { Id = Guid.NewGuid().ToString() };
         WalletCredentials cred = new WalletCredentials { Key = "2" };
 
-        private MockAgent _agent1;
-        private MockAgent _agent2;
+        private MockAgent? _agent1;
+        private MockAgent? _agent2;
         private readonly MockAgentRouter _router = new MockAgentRouter();
 
         public async Task InitializeAsync()
@@ -35,8 +35,8 @@ namespace Hyperledger.Aries.Tests.Integration
 
         public async Task DisposeAsync()
         {
-            await _agent1.Dispose();
-            await _agent2.Dispose();
+            if (_agent1 != null) await _agent1.Dispose();
+            if (_agent2 != null) await _agent2.Dispose();
         }
     }
 }

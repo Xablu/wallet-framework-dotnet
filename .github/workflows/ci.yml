@@ -1,4 +1,4 @@
-name: CI
+name: .NET CI Pipeline
 
 on:
   push:
@@ -15,43 +15,81 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 9.0.x
+        dotnet-version: |
+          6.0.x
+          7.0.x
+          8.0.x # Assuming support for multiple .NET versions based on project structure
 
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore src/WalletFramework.sln
 
-    - name: Build
-      run: dotnet build --no-restore
+    - name: Build solution
+      run: dotnet build src/WalletFramework.sln --no-restore
 
-    - name: Run tests with coverage
-      run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+    - name: Run Unit Tests
+      run: dotnet test src/WalletFramework.sln --no-build --verbosity normal --filter "Category=Unit" --collect:"XPlat Code Coverage"
 
-    - name: Publish coverage report
-      uses: codecov/codecov-action@v4
+    - name: Run Integration Tests
+      run: dotnet test src/WalletFramework.sln --no-build --verbosity normal --filter "Category=Integration" --collect:"XPlat Code Coverage"
+
+    # BDD/E2E tests might require a different setup (e.g., SpecFlow, BrowserStack)
+    # This step is a placeholder and needs further implementation based on the specific test framework and infrastructure
+    - name: Run BDD/E2E Tests
+      run: |
+        echo "Running BDD/E2E tests..."
+        # Placeholder for actual BDD/E2E test execution command
+        # dotnet test src/WalletFramework.BDDE2E.Tests/WalletFramework.BDDE2E.Tests.csproj --no-build --verbosity normal
+
+    - name: Run Roslyn Analyzers
+      run: dotnet build src/WalletFramework.sln /m /p:EnableNETAnalyzers=true /p:AnalysisMode=AllEnabledByDefault
+
+    # OWASP ZAP scan requires a running application instance.
+    # This step is a placeholder and needs setup for running the application and ZAP scan.
+    - name: Run OWASP ZAP Scan
+      run: |
+        echo "Running OWASP ZAP scan..."
+        zap-cli quickscan -r http://localhost:5000
+
+    # OWASP Dependency-Check requires setup and configuration.
+    # This step is a placeholder and needs setup for Dependency-Check execution.
+    - name: Run OWASP Dependency-Check
+      run: |
+        echo "Running OWASP Dependency-Check..."
+        dependency-check --scan . --format JUNIT --out .
+
+    - name: Upload Test Coverage Report
+      uses: actions/upload-artifact@v4
       with:
-        files: ./test/**/*.opencover.xml
-        fail_ci_if_error: true
+        name: test-coverage-report
+        path: |
+          **/TestResults/*/coverage.cobertura.xml
+          **/TestResults/*/coverage.json
 
-    - name: Run Static Analysis (Roslyn Analyzers)
-      run: dotnet build --no-restore /t:Rebuild /p:RunAnalyzers=true
-
-    # Placeholder for OWASP ZAP Dynamic Analysis
-    - name: OWASP ZAP Scan
+    # Performance benchmarks might require a separate job or specific setup.
+    # This step is a placeholder for collecting and publishing performance benchmark results.
+    - name: Upload Performance Benchmark Results
       run: |
-        echo "Placeholder for running OWASP ZAP scan"
-        # Command to run ZAP scan would go here
-        # Example: docker run -v ${PWD}:/zap/wrk/:rw owasp/zap2docker-stable zap-baseline.py -t http://localhost:5000 -I
-      continue-on-error: true # Allow build to pass even if ZAP finds issues initially
+        echo "Collecting and uploading performance benchmark results..."
+        # Placeholder for collecting benchmark results
+        # For example, if using BenchmarkDotNet, results might be in BenchmarkDotNet.Artifacts
+        # find . -name "*-results.json" -print0 | xargs -0 -I {} mv {} .
+      # uses: actions/upload-artifact@v4
+      # with:
+      #   name: performance-benchmark-results
+      #   path: |
+      #     *-results.json # Adjust path based on benchmark output
 
-    # Placeholder for OWASP Dependency-Check (SCA)
-    - name: OWASP Dependency-Check Scan
-      run: |
-        echo "Placeholder for running OWASP Dependency-Check scan"
-        # Command to run Dependency-Check would go here
-        # Example: dependency-check.sh --scan . --format HTML,JSON --project "wallet-framework-dotnet" --out .
-      continue-on-error: true # Allow build to pass even if Dependency-Check finds issues initially
+    - name: Upload Security Scan Reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: security-scan-reports
+        path: |
+          # Adjust paths based on actual output locations of ZAP and Dependency-Check reports
+          # zap_report.html
+          # dependency-check-report.xml

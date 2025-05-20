@@ -8,16 +8,17 @@ namespace Hyperledger.Aries.Agents.Edge
     {
         /// <summary>
         /// Creates an Edge Wallet based on the provided Agent Options.
-        /// Afterwards the method <see cref="EnsureMediatorConnectionAndInboxAsync"/> can be used to establish a mediator connection.
+        /// Afterwards the method <see cref="EnsureMediatorConnectionAndInboxAsync(AgentOptions, CancellationToken)"/> can be used to establish a mediator connection.
         /// </summary>
-        /// <param name="agentOptions">The Agent Options.</param>
+        /// <param name="options">The Agent Options.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the process.</param>
         /// <returns></returns>
+        /// <param name="cancellationToken">Cancellation Token to cancel the process.</param>
         Task ProvisionAsync(AgentOptions options, CancellationToken cancellationToken = default);
         
         /// <summary>
         /// Creates an Edge Wallet using the default Agent Options.
-        /// Afterwards the method <see cref="EnsureMediatorConnectionAndInboxAsync"/> can be used to establish a mediator connection.
+        /// Afterwards the method <see cref="EnsureMediatorConnectionAndInboxAsync(CancellationToken)"/> can be used to establish a mediator connection.
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token to cancel the process.</param>
         /// <returns></returns>

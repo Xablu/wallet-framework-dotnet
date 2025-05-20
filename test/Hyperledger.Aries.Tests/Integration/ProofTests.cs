@@ -24,9 +24,9 @@ namespace Hyperledger.Aries.Tests.Integration
         WalletConfiguration config3 = new WalletConfiguration { Id = Guid.NewGuid().ToString() };
         WalletCredentials cred = new WalletCredentials { Key = "2" };
 
-        private MockAgent _issuerAgent;
-        private MockAgent _holderAgent;
-        private MockAgent _requestorAgent;
+        private MockAgent? _issuerAgent = null;
+        private MockAgent? _holderAgent = null;
+        private MockAgent? _requestorAgent = null;
         private readonly MockAgentRouter _router = new MockAgentRouter();
 
         public async Task InitializeAsync()
@@ -42,6 +42,7 @@ namespace Hyperledger.Aries.Tests.Integration
         [Fact]
         public async Task CanPerformProofProtocol()
         {
+            if (_issuerAgent == null || _holderAgent == null) throw new InvalidOperationException("Agents not initialized.");
             (var issuerConnection, var holderConnection)  = await AgentScenarios.EstablishConnectionAsync(_issuerAgent, _holderAgent);
 
             await AgentScenarios.IssueCredentialAsync(_issuerAgent, _holderAgent, issuerConnection, holderConnection, new List<CredentialPreviewAttribute>
@@ -50,6 +51,7 @@ namespace Hyperledger.Aries.Tests.Integration
                 new CredentialPreviewAttribute("last_name", "Holder")
             });
 
+            if (_holderAgent == null || _requestorAgent == null) throw new InvalidOperationException("Agents not initialized.");
             (var holderRequestorConnection, var requestorConnection) = await AgentScenarios.EstablishConnectionAsync(_holderAgent, _requestorAgent);
 
             await AgentScenarios.ProofProtocolAsync(_requestorAgent, _holderAgent, requestorConnection,
@@ -70,6 +72,7 @@ namespace Hyperledger.Aries.Tests.Integration
         [InlineData(false)]
         public async Task CanPerformProofProtocolConnectionless(bool useDidKeyFormat)
         {
+            if (_issuerAgent == null || _holderAgent == null) throw new InvalidOperationException("Agents not initialized.");
             (var issuerConnection, var holderConnection)  = await AgentScenarios.EstablishConnectionAsync(_issuerAgent, _holderAgent);
 
             await AgentScenarios.IssueCredentialAsync(_issuerAgent, _holderAgent, issuerConnection, holderConnection, new List<CredentialPreviewAttribute>
@@ -78,6 +81,7 @@ namespace Hyperledger.Aries.Tests.Integration
                 new CredentialPreviewAttribute("last_name", "Holder")
             });
             
+            if (_requestorAgent == null || _holderAgent == null) throw new InvalidOperationException("Agents not initialized.");
             await AgentScenarios.ProofProtocolConnectionlessAsync(_requestorAgent, _holderAgent, new ProofRequest()
                 {
                     Name = "ProofReq",

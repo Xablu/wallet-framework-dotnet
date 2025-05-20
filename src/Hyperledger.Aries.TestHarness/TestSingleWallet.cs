@@ -94,9 +94,10 @@ namespace Hyperledger.TestHarness
             {
                 await ledgerService.RegisterNymAsync(Context, Trustee.Did, trustee.Did, trustee.VerKey, "TRUSTEE");
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 // Do nothing - this is expected if the trustee is already registered
+                Console.WriteLine(e);
             }
 
             return trustee;

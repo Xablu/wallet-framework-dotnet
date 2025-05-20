@@ -6,7 +6,7 @@ using Polly;
 
 namespace Hyperledger.Aries.Utils
 {
-    internal class ResilienceUtils
+    internal static class ResilienceUtils
     {
         internal static T RetryPolicy<T, E>(Func<T> action, Func<E, bool> exceptionPredicate = null)
             where E : Exception

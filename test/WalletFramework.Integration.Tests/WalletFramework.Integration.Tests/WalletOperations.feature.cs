@@ -40,8 +40,8 @@ namespace WalletFramework.Integration.Tests
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "", "Wallet Operations", "  As a wallet user\n  I want to be able to perform basic wallet operations\n  So th" +
-                    "at I can manage my digital credentials", ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "", "Wallet Operations", "  As a wallet user\r\n  I want to be able to perform basic wallet operations\r\n  So " +
+                    "that I can manage my digital credentials", ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         

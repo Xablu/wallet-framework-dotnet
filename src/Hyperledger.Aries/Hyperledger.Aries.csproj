@@ -21,10 +21,10 @@
         <PackageReference Include="Multiformats.Base" Version="$(MultiformatsBaseVersion)" />
         <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" />
         <PackageReference Include="Polly" Version="$(PollyVersion)" />
-        <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" /> <!-- Version not in Directory.Build.props -->
+        <PackageReference Include="BouncyCastle.Cryptography" Version="2.6.0" />
         <PackageReference Include="Stateless" Version="$(StatelessVersion)" />
         <PackageReference Include="System.Collections.Immutable" Version="1.7.1" /> <!-- Version not in Directory.Build.props -->
-        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.1" /> <!-- Version not in Directory.Build.props -->
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.10.0" /> <!-- Version not in Directory.Build.props -->
         <PackageReference Include="System.Reactive.Linq" Version="$(SystemReactiveLinqVersion)" />
         <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="$(MicrosoftCodeAnalysisNetAnalyzersVersion)">
             <PrivateAssets>all</PrivateAssets>

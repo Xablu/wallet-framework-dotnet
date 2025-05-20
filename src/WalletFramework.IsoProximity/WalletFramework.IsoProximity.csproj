@@ -7,15 +7,20 @@
 
     <ItemGroup>
       <ProjectReference Include="..\WalletFramework.MdocVc\WalletFramework.MdocVc.csproj" />
-    </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="$(MicrosoftCodeAnalysisNetAnalyzersVersion)">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Roslynator.Analyzers" Version="$(RoslynatorAnalyzersVersion)">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
+      </ItemGroup>
+  
+      <ItemGroup>
+          <PackageReference Include="BouncyCastle.Cryptography" Version="2.6.0" />
+      </ItemGroup>
+  
+      <ItemGroup>
+          <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0">
+              <PrivateAssets>all</PrivateAssets>
+              <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+          </PackageReference>
+          <PackageReference Include="Roslynator.Analyzers" Version="4.12.0">
+              <PrivateAssets>all</PrivateAssets>
+              <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+          </PackageReference>
+      </ItemGroup>
 </Project>

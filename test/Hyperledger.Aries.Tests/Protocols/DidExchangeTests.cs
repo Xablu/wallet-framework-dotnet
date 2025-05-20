@@ -24,8 +24,8 @@ namespace Hyperledger.Aries.Tests.Protocols
         private readonly string _requesterConfig = $"{{\"id\":\"{Guid.NewGuid()}\"}}";
         private const string Credentials = "{\"key\":\"test_wallet_key\"}";
 
-        private IAgentContext _responder;
-        private IAgentContext _requester;
+        private IAgentContext? _responder;
+        private IAgentContext? _requester;
 
         private readonly IDidExchangeService _didExchangeService;
 

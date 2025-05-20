@@ -1,0 +1,59 @@
+{
+  "documentation_registry": [
+    {
+      "path": "docs/UserBlueprint.md",
+      "title": "User Blueprint",
+      "type": "requirements",
+      "status": "active",
+      "last_modified": "2025-05-19T00:37:55Z"
+    },
+    {
+      "path": "docs/master_acceptance_test_plan.md",
+      "description": "Comprehensive high-level end-to-end acceptance tests.",
+      "type": "test plan",
+      "timestamp": "2025-05-19T08:20:18Z"
+    },
+    {
+      "path": "docs/PRDMasterPlan.md",
+      "description": "Detailed Master Project Plan with AI verifiable tasks.",
+      "type": "project plan",
+      "timestamp": "2025-05-19T08:20:18Z"
+    },
+    {
+      "path": "docs/architecture/HighLevelArchitecture.md",
+      "description": "High-Level Architecture document.",
+      "type": "architecture",
+      "timestamp": "2025-05-19T08:29:30Z"
+    },
+    {
+      "path": "docs/research/github_template_research_report.md",
+      "description": "GitHub Template Research Report findings.",
+      "type": "research report",
+      "timestamp": "2025-05-19T08:29:30Z"
+    },
+    {
+      "path": "docs/FrameworkScaffoldReport.md",
+      "description": "Report summarizing framework scaffolding activities.",
+      "type": "report",
+      "timestamp": "2025-05-19T08:29:30Z"
+    },
+    {
+      "path": "docs/updates/package_upgrades_20250519.md",
+      "description": "Details of package upgrades performed on 2025-05-19.",
+      "type": "update",
+      "timestamp": "2025-05-19T14:15:51Z"
+    },
+    {
+      "path": "docs/updates/package_upgrades_20250519.md",
+      "description": "Details of package upgrades performed on 2025-05-19.",
+      "type": "update",
+      "timestamp": "2025-05-19T15:03:29Z"
+    },
+    {
+      "path": "docs/updates/refinement-analysis-20250515-190428-doc-update.md",
+      "description": "Analysis and refinement of project documentation.",
+      "type": "report",
+      "timestamp": "2025-05-20T01:00:00Z"
+    }
+  ]
+}

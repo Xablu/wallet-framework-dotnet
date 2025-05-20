@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Hyperledger.TestHarness.Mock
 {
-    public class MockUtils
+    public static class MockUtils
     {
         public static async Task<MockAgent> CreateAsync(string agentName, WalletConfiguration configuration, WalletCredentials credentials, MockAgentHttpHandler handler, string issuerSeed = null, bool useMessageTypesHttps = false)
         {

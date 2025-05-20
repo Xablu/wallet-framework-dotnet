@@ -203,7 +203,7 @@ namespace Hyperledger.Aries.Agents
             }
             catch (Exception e)
             {
-                Logger.LogError("Failed to un-pack message", e);
+                Logger.LogError(e, "Failed to un-pack message");
                 throw new AriesFrameworkException(ErrorCode.InvalidMessage, "Failed to un-pack message", e);
             }
 
