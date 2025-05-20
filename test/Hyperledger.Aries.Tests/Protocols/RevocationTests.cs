@@ -20,28 +20,28 @@ namespace Hyperledger.Aries.Tests.Protocols
 {
     public class RevocationTestsFixture : TestSingleWallet
     {
-        public InProcAgent.PairedAgents PairedAgents;
+        public InProcAgent.PairedAgents? PairedAgents;
         
-        public IAgentContext IssuerAgentContext;
-        public IAgentContext HolderAgentContext;
+        public IAgentContext? IssuerAgentContext;
+        public IAgentContext? HolderAgentContext;
         
-        public ICredentialService IssuerCredentialService;
-        public ICredentialService HolderCredentialService;
+        public ICredentialService? IssuerCredentialService;
+        public ICredentialService? HolderCredentialService;
 
-        public IEventAggregator EventAggregator;
+        public IEventAggregator? EventAggregator;
 
-        public IProofService IssuerProofService;
-        public IProofService HolderProofService;
+        public IProofService? IssuerProofService;
+        public IProofService? HolderProofService;
 
-        public IMessageService IssuerMessageService;
-        public IMessageService HolderMessageService;
+        public IMessageService? IssuerMessageService;
+        public IMessageService? HolderMessageService;
 
-        public ProvisioningRecord IssuerConfiguration;
+        public ProvisioningRecord? IssuerConfiguration;
 
-        public string RevocableCredentialDefinitionId;
-        public string NonRevocableCredentialDefinitionId;
+        public string? RevocableCredentialDefinitionId;
+        public string? NonRevocableCredentialDefinitionId;
         
-        private string _credentialSchemaId;
+        private string? _credentialSchemaId;
 
         public override async Task InitializeAsync()
         {

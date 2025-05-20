@@ -1,7 +1,7 @@
 ﻿namespace Hyperledger.Aries.Utils
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public class LoggingEvents
+    public static class LoggingEvents
     {
 
         //Credential events

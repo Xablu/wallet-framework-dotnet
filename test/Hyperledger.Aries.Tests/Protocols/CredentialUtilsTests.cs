@@ -129,7 +129,7 @@ namespace Hyperledger.Aries.Tests.Protocols
             Assert.Equal(expected, actual);
 
             // null value
-            value = null;
+            string? value = null;
             expected = "102987336249554097029535212322581322789799900648198034993379397001115665086549";
             actual = CredentialUtils.GetEncoded(value);
             Assert.Equal(expected, actual);

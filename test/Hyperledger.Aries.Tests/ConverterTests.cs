@@ -23,7 +23,7 @@ namespace Hyperledger.Aries.Tests
             var token = JObject.Parse(serialized);
 
             Assert.NotNull(token["~sample"]);
-            Assert.Equal("123", token["~sample"]["Prop1"]);
+            Assert.Equal("123", token["~sample"]!["Prop1"]);
         }
 
         [Fact]
@@ -122,6 +122,6 @@ namespace Hyperledger.Aries.Tests
 
     class SampleDecorator
     {
-        public string Prop1 { get; set; }
+        public string? Prop1 { get; set; } = null;
     }
 }

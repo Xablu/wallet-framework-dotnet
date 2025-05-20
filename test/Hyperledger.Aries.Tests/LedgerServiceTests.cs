@@ -49,9 +49,9 @@ namespace Hyperledger.Aries.Tests
                 .RegisterNymAsync(context, TestConstants.StewardDid, did.Did, did.VerKey, null);
 
             var result = await _fixture.Host.Services.GetService<ILedgerService>().LookupNymAsync(context, did.Did);
-            var data = JObject.Parse(result)["result"]?["data"]?.ToString();
+            var data = JObject.Parse(result!)["result"]?["data"]?.ToString();
             
-            Assert.Equal(did.Did, JObject.Parse(data!)["dest"]?.ToString());
+            Assert.Equal(did.Did, JObject.Parse(data!)!["dest"]?.ToString());
         }
         
         [Fact(DisplayName = "Set Attribute on ledger")]
@@ -105,7 +105,7 @@ namespace Hyperledger.Aries.Tests
 
             var result = await _fixture.Host.Services.GetService<ILedgerService>().LookupRevocationRegistryDefinitionAsync(context, $"{TestConstants.StewardDid}:4:{credDefId}:CL_ACCUM:1-1024");
             
-            Assert.Equal(JObject.Parse(data)["value"]!["tailsHash"]!.ToString(), JObject.Parse(result.ObjectJson)["value"]!["tailsHash"]!.ToString());
+            Assert.Equal(JObject.Parse(data!)["value"]!["tailsHash"]!.ToString(), JObject.Parse(result!.ObjectJson)["value"]!["tailsHash"]!.ToString());
         }
         
         [Fact(DisplayName = "Set revocation registry entry on ledger")]
@@ -127,7 +127,7 @@ namespace Hyperledger.Aries.Tests
 
             var result = await _fixture.Host.Services.GetService<ILedgerService>().LookupRevocationRegistryAsync(context, $"Th7MpTaRZVRYnPiabds81Y:4:{credDefId}:CL_ACCUM:1-1024", ((DateTimeOffset)DateTime.Now).ToUnixTimeSeconds());
             
-            Assert.Equal(JObject.Parse(value)["value"]!["accum"]!.ToString(), JObject.Parse(result.ObjectJson)["value"]!["accum"]!.ToString());
+            Assert.Equal(JObject.Parse(value!)["value"]!["accum"]!.ToString(), JObject.Parse(result!.ObjectJson)["value"]!["accum"]!.ToString());
         }
         
         [Fact(DisplayName = "Set schema on ledger")]
@@ -143,7 +143,7 @@ namespace Hyperledger.Aries.Tests
 
             var result = await _fixture.Host.Services.GetService<ILedgerService>().LookupSchemaAsync(context, $"Th7MpTaRZVRYnPiabds81Y:2:{name}:1.0");
              
-             Assert.Equal(name, JObject.Parse(result.ObjectJson)["name"]?.ToString());
+             Assert.Equal(name, JObject.Parse(result!.ObjectJson)["name"]?.ToString());
         }
         
         [Fact(DisplayName = "Set service endpoint on ledger")]
@@ -155,7 +155,7 @@ namespace Hyperledger.Aries.Tests
             await _fixture.Host.Services.GetService<ILedgerService>().RegisterServiceEndpointAsync(context, TestConstants.StewardDid, endpoint);
             var result = await _fixture.Host.Services.GetService<ILedgerService>().LookupServiceEndpointAsync(context, TestConstants.StewardDid);
             
-            Assert.Equal(endpoint, result.Result.Endpoint);
+            Assert.Equal(endpoint, result!.Result!.Endpoint);
         }
         
         public class LedgerServiceTestsV1 : LedgerServiceTests, IClassFixture<LedgerServiceTestsV1.SingleTestWalletFixture>

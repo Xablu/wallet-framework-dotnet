@@ -13,8 +13,8 @@ namespace Hyperledger.Aries.Tests
         private WalletConfiguration _config = new WalletConfiguration { Id = Guid.NewGuid().ToString() };
         private WalletCredentials _creds = new WalletCredentials { Key = "1" };
 
-        private DefaultWalletService _walletService;
-        private DefaultProvisioningService _provisioningService;
+        private DefaultWalletService? _walletService = null;
+        private DefaultProvisioningService? _provisioningService = null;
 
         public async Task DisposeAsync()
         {

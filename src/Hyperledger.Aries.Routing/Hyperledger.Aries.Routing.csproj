@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
         <PackageId>WalletFramework.Routing</PackageId>
         <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Hyperledger.Aries.Routing.xml</DocumentationFile>
     </PropertyGroup>
@@ -11,4 +12,14 @@
     <ItemGroup>
         <PackageReference Include="Multiformats.Base" Version="$(MultiformatsBaseVersion)" />
     </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Roslynator.Analyzers" Version="4.12.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 </Project>

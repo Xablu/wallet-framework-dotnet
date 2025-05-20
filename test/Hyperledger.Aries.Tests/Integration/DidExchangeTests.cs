@@ -70,8 +70,8 @@ namespace Hyperledger.Aries.Tests.Integration
 
             Assert.Equal(ConnectionState.Negotiating, responderRecord.State);
             Assert.Equal(ConnectionState.Negotiating, requesterRecord.State);
-            Assert.Equal(requesterRecord.TheirDid, TestConstants.StewardDid);
-            Assert.Equal(responderRecord.TheirDid, requesterRecord.MyDid);
+            Assert.Equal(TestConstants.StewardDid, requesterRecord.TheirDid);
+            Assert.Equal(requesterRecord.MyDid, responderRecord.TheirDid);
 
             Assert.Equal(
                 requesterRecord.GetTag(TagConstants.LastThreadId),
@@ -92,8 +92,8 @@ namespace Hyperledger.Aries.Tests.Integration
             
             Assert.Equal(ConnectionState.Connected, newResponderRecord.State);
             Assert.Equal(ConnectionState.Connected, newRequesterRecord.State);
-            Assert.Equal(newRequesterRecord.TheirDid, newResponderRecord.MyDid);
-            Assert.Equal(newResponderRecord.TheirDid, newRequesterRecord.MyDid);
+            Assert.Equal(newResponderRecord.MyDid, newRequesterRecord.TheirDid);
+            Assert.Equal(newRequesterRecord.MyDid, newResponderRecord.TheirDid);
 
             Assert.Equal(
                 newRequesterRecord.GetTag(TagConstants.LastThreadId),
@@ -114,8 +114,8 @@ namespace Hyperledger.Aries.Tests.Integration
             
             Assert.Equal(ConnectionState.Connected, finalResponderRecord.State);
             Assert.Equal(ConnectionState.Connected, finalRequesterRecord.State);
-            Assert.Equal(finalRequesterRecord.TheirDid, finalResponderRecord.MyDid);
-            Assert.Equal(finalResponderRecord.TheirDid, finalRequesterRecord.MyDid);
+            Assert.Equal(finalResponderRecord.MyDid, finalRequesterRecord.TheirDid);
+            Assert.Equal(finalRequesterRecord.MyDid, finalResponderRecord.TheirDid);
             
             Assert.Equal(
                 finalRequesterRecord.GetTag(TagConstants.LastThreadId),

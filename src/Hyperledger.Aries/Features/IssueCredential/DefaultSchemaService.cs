@@ -118,7 +118,10 @@ namespace Hyperledger.Aries.Features.IssueCredential
                 var schemaSequenceId = Convert.ToInt32(JObject.Parse(credDef)["schemaId"].ToString());
                 return await LookupSchemaAsync(agentContext, schemaSequenceId);
             }
-            catch (Exception) { }
+            catch (Exception e) {
+                // ignored
+                // TODO: Log this exception for debugging purposes
+            }
 
             return null;
         }
@@ -146,7 +149,10 @@ namespace Hyperledger.Aries.Features.IssueCredential
 
                     return txnData.ToString();
                 }
-                catch (Exception) { }
+                catch (Exception e) {
+                    // ignored
+                    // TODO: Log this exception for debugging purposes
+                }
             }
 
             return null;

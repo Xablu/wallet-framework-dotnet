@@ -13,9 +13,9 @@ namespace Hyperledger.Aries.Tests
         private const string Config = "{\"id\":\"search_test_wallet\"}";
         private const string Credentials = "{\"key\":\"test_wallet_key\"}";
 
-        private Wallet _wallet;
+        private Wallet? _wallet;
 
-        private readonly IWalletRecordService _recordService;
+        private readonly IWalletRecordService _recordService = null!;
 
         public SearchTests()
         {

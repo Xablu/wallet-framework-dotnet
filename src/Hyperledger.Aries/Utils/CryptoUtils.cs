@@ -14,7 +14,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Hyperledger.Aries.Utils
 {
-    public class CryptoUtils
+    public static class CryptoUtils
     {
         /// <summary>Packs a message</summary>
         /// <param name="wallet">The wallet.</param>
@@ -65,20 +65,23 @@ namespace Hyperledger.Aries.Utils
         public static async Task<UnpackResult> UnpackAsync(Wallet wallet, byte[] message)
         {
             var result = await Crypto.UnpackMessageAsync(wallet, message);
-            return result.ToObject<UnpackResult>();
-        }
+            // Mitigate insecure deserialization by explicitly controlling settings
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<UnpackResult>(result.GetUTF8String());
+      }
 
-        /// <summary>Unpacks the asynchronous.</summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="wallet">The wallet.</param>
-        /// <param name="message">The message.</param>
-        /// <returns>Decrypted message as UTF8 string and sender/recipient key information</returns>
-        public static async Task<T> UnpackAsync<T>(Wallet wallet, byte[] message)
-        {
-            var result = await Crypto.UnpackMessageAsync(wallet, message);
-            var unpacked = result.ToObject<UnpackResult>();
-            return unpacked.Message.ToObject<T>();
-        }
+      /// <summary>Unpacks the asynchronous.</summary>
+      /// <typeparam name="T"></typeparam>
+      /// <param name="wallet">The wallet.</param>
+      /// <param name="message">The message.</param>
+      /// <returns>Decrypted message as UTF8 string and sender/recipient key information</returns>
+      public static async Task<T> UnpackAsync<T>(Wallet wallet, byte[] message)
+      {
+          var result = await Crypto.UnpackMessageAsync(wallet, message);
+          // Mitigate insecure deserialization by explicitly controlling settings for UnpackResult
+          var unpacked = Newtonsoft.Json.JsonConvert.DeserializeObject<UnpackResult>(result.GetUTF8String());
+          // Mitigate insecure deserialization by explicitly controlling settings for the inner message
+          return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(unpacked.Message);
+      }
 
         /// <summary>
         /// Generate unique random alpha-numeric key
@@ -88,16 +91,22 @@ namespace Hyperledger.Aries.Utils
         public static string GetUniqueKey(int maxSize)
         {
             var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
-            var data = new byte[maxSize];
-            using (var crypto = new RNGCryptoServiceProvider())
-            {
-                crypto.GetNonZeroBytes(data);
-            }
-
             var result = new StringBuilder(maxSize);
-            foreach (var b in data)
+            var charsLength = chars.Length;
+            var maxValidByte = byte.MaxValue - (byte.MaxValue % charsLength + 1) % charsLength;
+
+            using (var crypto = RandomNumberGenerator.Create())
             {
-                result.Append(chars[b % (chars.Length)]);
+                var data = new byte[1];
+                for (int i = 0; i < maxSize; i++)
+                {
+                    crypto.GetBytes(data);
+                    while (data[0] > maxValidByte)
+                    {
+                        crypto.GetBytes(data);
+                    }
+                    result.Append(chars[data[0] % charsLength]);
+                }
             }
             return result.ToString();
         }

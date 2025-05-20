@@ -50,7 +50,7 @@ namespace Hyperledger.Aries.Tests.Routing
 
             string inboxId = connection1.GetTag("InboxId");
             IWalletRecordService recordService = pair.Agent1.Host.Services.GetRequiredService<IWalletRecordService>();
-            InboxRecord inboxRecord = await recordService.GetAsync<InboxRecord>(pair.Agent1.Context.Wallet, inboxId);
+            InboxRecord inboxRecord = await recordService.GetAsync<InboxRecord>(pair.Agent1.Context.Wallet, inboxId)!;
             inboxRecord.GetTag("tag").Should().BeNull();
         }
 
@@ -89,7 +89,7 @@ namespace Hyperledger.Aries.Tests.Routing
 
             string inboxId = connection1.GetTag("InboxId");
             IWalletRecordService recordService = pair.Agent1.Host.Services.GetRequiredService<IWalletRecordService>();
-            InboxRecord inboxRecord = await recordService.GetAsync<InboxRecord>(pair.Agent1.Context.Wallet, inboxId);
+            InboxRecord inboxRecord = await recordService.GetAsync<InboxRecord>(pair.Agent1.Context.Wallet, inboxId)!;
             inboxRecord.GetTag("tag").Should().Be(metaData["tag"]);
         }
     }

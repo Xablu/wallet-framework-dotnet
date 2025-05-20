@@ -21,8 +21,8 @@ namespace Hyperledger.Aries.Tests.Integration
         WalletConfiguration config2 = new WalletConfiguration { Id = Guid.NewGuid().ToString() };
         WalletCredentials cred = new WalletCredentials { Key = "2" };
 
-        private MockAgent _issuerAgent;
-        private MockAgent _holderAgent;
+        private MockAgent? _issuerAgent = null;
+        private MockAgent? _holderAgent = null;
         private readonly MockAgentRouter _router = new MockAgentRouter();
 
         public async Task InitializeAsync()

@@ -293,7 +293,7 @@ namespace Hyperledger.Aries.Features.IssueCredential
             ConnectionRecord connection)
         {
             var offerAttachment = credentialOffer.Offers.FirstOrDefault(x => x.Id == "libindy-cred-offer-0")
-                                  ?? throw new ArgumentNullException(nameof(CredentialOfferMessage.Offers));
+                                   ?? throw new ArgumentException("No offer attachment found", nameof(credentialOffer));
 
             var offerJson = offerAttachment.Data.Base64.GetBytesFromBase64().GetUTF8String();
             var offer = JObject.Parse(offerJson);
@@ -435,51 +435,56 @@ namespace Hyperledger.Aries.Features.IssueCredential
         public virtual async Task<string> ProcessCredentialAsync(IAgentContext agentContext, CredentialIssueMessage credential,
             ConnectionRecord connection)
         {
-            var credentialAttachment = credential.Credentials.FirstOrDefault(x => x.Id == "libindy-cred-0")
-                                       ?? throw new ArgumentException("Credential attachment not found");
-
-            var credentialJson = credentialAttachment.Data.Base64.GetBytesFromBase64().GetUTF8String();
-            var credentialJobj = JObject.Parse(credentialJson);
-            var definitionId = credentialJobj["cred_def_id"].ToObject<string>();
-            var revRegId = credentialJobj["rev_reg_id"]?.ToObject<string>();
-
-            var credentialRecord = await Policy.Handle<AriesFrameworkException>()
-                .RetryAsync(3, async (ex, retry) => { await Task.Delay((int)Math.Pow(retry, 2) * 100); })
-                .ExecuteAsync(() => this.GetByThreadIdAsync(agentContext, credential.GetThreadId()));
-
-            if (credentialRecord.State != CredentialState.Requested)
-                throw new AriesFrameworkException(ErrorCode.RecordInInvalidState,
-                    $"Credential state was invalid. Expected '{CredentialState.Requested}', found '{credentialRecord.State}'");
-            var credentialDefinition = await LedgerService.LookupDefinitionAsync(agentContext, definitionId);
-
-            string revocationRegistryDefinitionJson = null;
-            if (!string.IsNullOrEmpty(revRegId))
+            async Task<string> ProcessCredential()
             {
-                // If credential supports revocation, lookup registry definition
-                var revocationRegistry =
-                    await LedgerService.LookupRevocationRegistryDefinitionAsync(agentContext, revRegId);
-                revocationRegistryDefinitionJson = revocationRegistry.ObjectJson;
-                credentialRecord.RevocationRegistryId = revRegId;
+                var credentialAttachment = credential.Credentials.FirstOrDefault(x => x.Id == "libindy-cred-0")
+                                                ?? throw new ArgumentException("Credential attachment not found", nameof(credential));
+
+                var credentialJson = credentialAttachment.Data.Base64.GetBytesFromBase64().GetUTF8String();
+                var credentialJobj = JObject.Parse(credentialJson);
+                var definitionId = credentialJobj["cred_def_id"].ToObject<string>();
+                var revRegId = credentialJobj["rev_reg_id"]?.ToObject<string>();
+
+                var credentialRecord = await this.GetByThreadIdAsync(agentContext, credential.GetThreadId());
+
+                if (credentialRecord.State != CredentialState.Requested)
+                    throw new AriesFrameworkException(ErrorCode.RecordInInvalidState,
+                        $"Credential state was invalid. Expected '{CredentialState.Requested}', found '{credentialRecord.State}'");
+                var credentialDefinition = await LedgerService.LookupDefinitionAsync(agentContext, definitionId);
+
+                string revocationRegistryDefinitionJson = null;
+                if (!string.IsNullOrEmpty(revRegId))
+                {
+                    // If credential supports revocation, lookup registry definition
+                    var revocationRegistry =
+                        await LedgerService.LookupRevocationRegistryDefinitionAsync(agentContext, revRegId);
+                    revocationRegistryDefinitionJson = revocationRegistry.ObjectJson;
+                    credentialRecord.RevocationRegistryId = revRegId;
+                }
+
+                var credentialId = await AnonCreds.ProverStoreCredentialAsync(
+                    wallet: agentContext.Wallet,
+                    credId: credentialRecord.Id,
+                    credReqMetadataJson: credentialRecord.CredentialRequestMetadataJson,
+                    credJson: credentialJson,
+                    credDefJson: credentialDefinition.ObjectJson,
+                    revRegDefJson: revocationRegistryDefinitionJson);
+
+                credentialRecord.CredentialId = credentialId;
+                await credentialRecord.TriggerAsync(CredentialTrigger.Issue);
+                await RecordService.UpdateAsync(agentContext.Wallet, credentialRecord);
+                EventAggregator.Publish(new ServiceMessageProcessingEvent
+                {
+                    RecordId = credentialRecord.Id,
+                    MessageType = credential.Type,
+                    ThreadId = credential.GetThreadId()
+                });
+                return credentialRecord.Id;
             }
 
-            var credentialId = await AnonCreds.ProverStoreCredentialAsync(
-                wallet: agentContext.Wallet,
-                credId: credentialRecord.Id,
-                credReqMetadataJson: credentialRecord.CredentialRequestMetadataJson,
-                credJson: credentialJson,
-                credDefJson: credentialDefinition.ObjectJson,
-                revRegDefJson: revocationRegistryDefinitionJson);
-
-            credentialRecord.CredentialId = credentialId;
-            await credentialRecord.TriggerAsync(CredentialTrigger.Issue);
-            await RecordService.UpdateAsync(agentContext.Wallet, credentialRecord);
-            EventAggregator.Publish(new ServiceMessageProcessingEvent
-            {
-                RecordId = credentialRecord.Id,
-                MessageType = credential.Type,
-                ThreadId = credential.GetThreadId()
-            });
-            return credentialRecord.Id;
+            return await Policy.Handle<AriesFrameworkException>()
+                .RetryAsync(3, async (ex, retry) => { await Task.Delay((int)Math.Pow(retry, 2) * 100); })
+                .ExecuteAsync(ProcessCredential);
         }
 
         /// <inheritdoc />
@@ -711,7 +716,8 @@ namespace Hyperledger.Aries.Features.IssueCredential
             {
                 revocationRecord =
                     await RecordService.GetAsync<RevocationRegistryRecord>(agentContext.Wallet,
-                        definitionRecord.CurrentRevocationRegistryId);
+                        definitionRecord.CurrentRevocationRegistryId ??
+                        throw new InvalidOperationException("CurrentRevocationRegistryId is not set"));
                 tailsReader = await TailsService.OpenTailsAsync(revocationRecord.TailsFile);
             }
 

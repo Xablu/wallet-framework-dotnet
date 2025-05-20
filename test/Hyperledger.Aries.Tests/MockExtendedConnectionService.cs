@@ -12,17 +12,17 @@ namespace Hyperledger.Aries.Tests
 {
     public class MockExtendedConnectionService : IConnectionService
     {
-        public Task<ConnectionRecord> GetAsync(IAgentContext agentContext, string connectionId)
+        public Task<ConnectionRecord?> GetAsync(IAgentContext agentContext, string connectionId)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<List<ConnectionRecord>> ListAsync(IAgentContext agentContext, ISearchQuery query = null, int count = 100, int skip = 0)
+        public Task<List<ConnectionRecord>> ListAsync(IAgentContext agentContext, ISearchQuery? query = null, int count = 100, int skip = 0)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<(ConnectionInvitationMessage, ConnectionRecord)> CreateInvitationAsync(IAgentContext agentContext, InviteConfiguration config = null)
+        public Task<(ConnectionInvitationMessage, ConnectionRecord)> CreateInvitationAsync(IAgentContext agentContext, InviteConfiguration? config = null)
         {
             throw new System.NotImplementedException();
         }

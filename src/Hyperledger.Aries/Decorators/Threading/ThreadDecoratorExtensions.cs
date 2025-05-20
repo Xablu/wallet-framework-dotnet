@@ -58,9 +58,10 @@ namespace Hyperledger.Aries.Decorators.Threading
                 var threadBlock = message.GetDecorator<ThreadDecorator>(DecoratorIdentifier);
                 threadId = threadBlock.ThreadId;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 // ignored
+                // TODO: Log this exception for debugging purposes
             }
 
             if (string.IsNullOrEmpty(threadId))
@@ -82,9 +83,10 @@ namespace Hyperledger.Aries.Decorators.Threading
                 var threadBlock = message.GetDecorator<ThreadDecorator>(DecoratorIdentifier);
                 threadId = threadBlock.ParentThreadId;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 // ignored
+                // TODO: Log this exception for debugging purposes
             }
 
             return threadId;

@@ -31,9 +31,9 @@ namespace Hyperledger.Aries.Tests.Protocols
         private readonly string _holderConfigTwo = $"{{\"id\":\"{Guid.NewGuid()}\"}}";
         private const string Credentials = "{\"key\":\"test_wallet_key\"}";
 
-        private IAgentContext _issuerWallet;
-        private IAgentContext _holderWallet;
-        private IAgentContext _holderWalletTwo;
+        private IAgentContext? _issuerWallet;
+        private IAgentContext? _holderWallet;
+        private IAgentContext? _holderWalletTwo;
 
         private readonly IEventAggregator _eventAggregator;
         private readonly IConnectionService _connectionService;
@@ -290,8 +290,8 @@ namespace Hyperledger.Aries.Tests.Protocols
             Assert.Equal(connectionIssuer.MyDid, connectionHolder.TheirDid);
             Assert.Equal(connectionIssuer.TheirDid, connectionHolder.MyDid);
 
-            Assert.Equal(connectionIssuer.Endpoint.Uri, TestConstants.DefaultMockUri);
-            Assert.Equal(connectionIssuer.Endpoint.Uri, TestConstants.DefaultMockUri);
+            Assert.Equal(TestConstants.DefaultMockUri, connectionIssuer.Endpoint.Uri);
+            Assert.Equal(TestConstants.DefaultMockUri, connectionIssuer.Endpoint.Uri);
         }
 
         [Fact]
@@ -320,8 +320,8 @@ namespace Hyperledger.Aries.Tests.Protocols
             Assert.Equal(connectionIssuerTwo.MyDid, connectionHolderTwo.TheirDid);
             Assert.Equal(connectionIssuerTwo.TheirDid, connectionHolderTwo.MyDid);
 
-            Assert.Equal(connectionIssuer.Endpoint.Uri, TestConstants.DefaultMockUri);
-            Assert.Equal(connectionIssuerTwo.Endpoint.Uri, TestConstants.DefaultMockUri);
+            Assert.Equal(TestConstants.DefaultMockUri, connectionIssuer.Endpoint.Uri);
+            Assert.Equal(TestConstants.DefaultMockUri, connectionIssuerTwo.Endpoint.Uri);
         }
 
         public async Task DisposeAsync()

@@ -85,9 +85,9 @@ namespace Hyperledger.Aries.Tests.Protocols
                 version: "1.0",
                 attributeNames: new[] { "test-attr" });
 
-            string revocationRegistryId1 = null;
-            string revocationRegistryId2 = null;
-            string revocationRegistryId3 = null;
+            string? revocationRegistryId1 = null;
+            string? revocationRegistryId2 = null;
+            string? revocationRegistryId3 = null;
 
             var credentialDefinitionId = await issuerSchemaService.CreateCredentialDefinitionAsync(
                 context: agents.Agent1.Context,

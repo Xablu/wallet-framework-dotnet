@@ -138,7 +138,8 @@ namespace Hyperledger.Aries.Agents
             if (messageContext is PackedMessageContext packedMessageContext)
             {
                 (inboundMessageContext, unpacked) = await UnpackAsync(agentContext, packedMessageContext);
-                Logger.LogInformation($"Agent Message Received : {inboundMessageContext.ToJson()}");
+                // Mitigate sensitive data exposure: Log only message type and connection details, not the full payload.
+                Logger.LogInformation($"Agent Message Received. Type: {inboundMessageContext.GetMessageType()}, ConnectionId: {inboundMessageContext.Connection?.Id}");
             }
 
             if (Handlers.Where(handler => handler != null).FirstOrDefault(
@@ -202,7 +203,7 @@ namespace Hyperledger.Aries.Agents
             }
             catch (Exception e)
             {
-                Logger.LogError("Failed to un-pack message", e);
+                Logger.LogError(e, "Failed to un-pack message");
                 throw new AriesFrameworkException(ErrorCode.InvalidMessage, "Failed to un-pack message", e);
             }
 

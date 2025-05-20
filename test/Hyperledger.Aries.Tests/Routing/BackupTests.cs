@@ -17,13 +17,13 @@ namespace Hyperledger.Aries.Tests.Routing
 {
     public class BackupTests : IAsyncLifetime
     {
-        public InProcAgent.PairedAgents Pair { get; private set; }
+        public InProcAgent.PairedAgents? Pair { get; private set; }
         
-        public IEdgeClientService EdgeClient { get; private set; }
-        public IAgentContext EdgeContext { get; private set; }
-        public AgentOptions AgentOptions { get; private set; }
-        public IAgentContext MediatorContext { get; private set; }
-        public IWalletService WalletService { get; private set; }
+        public IEdgeClientService? EdgeClient { get; private set; }
+        public IAgentContext? EdgeContext { get; private set; }
+        public AgentOptions? AgentOptions { get; private set; }
+        public IAgentContext? MediatorContext { get; private set; }
+        public IWalletService? WalletService { get; private set; }
 
         public async Task DisposeAsync()
         {
@@ -70,7 +70,7 @@ namespace Hyperledger.Aries.Tests.Routing
             SetupDirectoriesAndReturnPath(seed);
             
             var ex = await Assert.ThrowsAsync<ArgumentException>(() => EdgeClient.CreateBackupAsync(EdgeContext, seed));
-            Assert.Equal(ex.Message, $"{nameof(seed)} should be 32 characters");
+            Assert.Equal($"{nameof(seed)} should be 32 characters", ex.Message);
         }
 
         [Fact(DisplayName = "Get a list of available backups")]

@@ -11,7 +11,7 @@ namespace Hyperledger.Aries.Tests
 {
     public abstract class SchemaServiceTests : TestSingleWallet
     {
-        protected TestSingleWallet _fixture;
+        protected TestSingleWallet? _fixture;
         
         [Fact]
         public async Task CanCreateAndResolveSchema()

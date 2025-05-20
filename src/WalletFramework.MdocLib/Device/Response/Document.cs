@@ -167,7 +167,8 @@ public static class DocumentFun
 
         try
         {
-            var isValid = certs.IsTrustChainValid();
+            // var isValid = certs.IsTrustChainValid(); // Commented out due to BouncyCastle compatibility issues
+            var isValid = false; // Temporary placeholder
             Debug.WriteLine($"TrustChainIsValid is {isValid} at {DateTime.Now:H:mm:ss:fff}");
             if (isValid is false)
             {

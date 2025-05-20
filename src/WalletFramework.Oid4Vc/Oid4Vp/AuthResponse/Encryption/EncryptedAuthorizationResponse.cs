@@ -6,7 +6,6 @@ using Org.BouncyCastle.Crypto.Engines;
 using Org.BouncyCastle.Crypto.Modes;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
-using WalletFramework.Core.Base64Url;
 using WalletFramework.Core.Functional;
 using WalletFramework.Oid4Vc.Oid4Vp.Jwk;
 using WalletFramework.Oid4Vc.Oid4Vp.Models;
@@ -27,7 +26,7 @@ public static class EncryptedAuthorizationResponseFun
         Option<string> authorizationEncryptedResponseEnc,
         Option<Nonce> mdocNonce)
     {
-        var apvBase64 = Base64UrlString.CreateBase64UrlString(apv.GetUTF8Bytes());
+        var apvBase64 = Core.Base64Url.Base64UrlString.CreateBase64UrlString(apv.GetUTF8Bytes());
 
         var headers = new Dictionary<string, object>
         {

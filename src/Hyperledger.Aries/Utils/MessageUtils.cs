@@ -81,7 +81,10 @@ namespace Hyperledger.Aries.Utils
                     messageBase64 = uri.DecodeQueryParameters()[queryParam];
                     break;
                 }
-                catch (Exception) { }
+                catch (Exception e) {
+                    // ignored
+                    // TODO: Log this exception for debugging purposes
+                }
             }
 
             if (messageBase64 == null)

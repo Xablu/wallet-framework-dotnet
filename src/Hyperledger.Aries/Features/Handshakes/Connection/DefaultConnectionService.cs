@@ -451,7 +451,7 @@ namespace Hyperledger.Aries.Features.Handshakes.Connection
             return connectionRecord;      
         }  
         
-        public virtual async Task<ConnectionRecord> ResolveByMyKeyAsync(IAgentContext agentContext, string myKey)
+        public virtual async Task<ConnectionRecord?> ResolveByMyKeyAsync(IAgentContext agentContext, string myKey)
         {
             if (string.IsNullOrEmpty(myKey))
                 throw new ArgumentNullException(nameof(myKey));

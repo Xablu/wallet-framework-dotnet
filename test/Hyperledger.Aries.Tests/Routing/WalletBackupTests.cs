@@ -21,7 +21,7 @@ namespace Hyperledger.Aries.Tests.Routing
                 did = backupDid,
                 seed = seed
             }.ToJson());
-            Assert.Equal(did.Did, backupDid);
+            Assert.Equal(backupDid, did.Did);
 
             var ex = await Assert.ThrowsAsync<IndyException>(async () => await Did.CreateAndStoreMyDidAsync(Context.Wallet, new
             {

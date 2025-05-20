@@ -35,7 +35,7 @@ public static class PaymentTransactionDataSamples
     public static Base64UrlString GetBase64UrlStringSample()
     {
         var str = JsonSample;
-        var encoded = Base64UrlEncoder.Encode(str);
+        var encoded = Microsoft.IdentityModel.Tokens.Base64UrlEncoder.Encode(str);
         return Base64UrlString.FromString(encoded).UnwrapOrThrow();
     }
 }

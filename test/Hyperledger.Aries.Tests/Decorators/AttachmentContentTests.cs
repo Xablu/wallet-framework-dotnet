@@ -13,7 +13,7 @@ namespace Hyperledger.Aries.Tests.Decorators
     {
         private readonly string _walletConfig = $"{{\"id\":\"{Guid.NewGuid()}\"}}";
         private const string Credentials = "{\"key\":\"test_wallet_key\"}";
-        private IAgentContext _agent;
+        private IAgentContext? _agent;
 
         public async Task InitializeAsync()
         {
