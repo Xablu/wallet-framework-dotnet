@@ -10,6 +10,12 @@
 *.user
 *.userosscache
 *.sln.docstates
+.swarmConfig
+.memory
+.docsregistry
+codebase_analysis.json
+orchestration/
+docs/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

@@ -1,0 +1,128 @@
+# CI Workflow Pseudocode
+
+# This file outlines the steps for the Continuous Integration workflow
+# as described in the PRD Master Plan. This is a pseudocode representation
+# and will be translated into a functional GitHub Actions workflow later.
+
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest # Or a matrix of OS/versions
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: | # Specify required .NET versions
+          6.0.x
+          7.0.x
+          8.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore src/WalletFramework.sln # Restore dependencies for the entire solution
+
+    - name: Build solution
+      run: dotnet build src/WalletFramework.sln --configuration Release --no-restore
+
+    - name: Run Unit Tests
+      run: dotnet test src/WalletFramework.sln --filter "Category=Unit" --configuration Release --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+
+    - name: Run Integration Tests
+      run: dotnet test src/WalletFramework.sln --filter "Category=Integration" --configuration Release --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+
+    - name: Run E2E/BDD Tests
+      # This might require setting up external dependencies (e.g., Docker containers for services)
+      run: dotnet test src/WalletFramework.sln --filter "Category=E2E|Category=BDD" --configuration Release --no-build --verbosity normal # Coverage collection might be different for E2E
+
+    - name: Run Security Scans (SAST)
+      # Integrate Roslyn analyzers or other SAST tools
+      run: |
+        # Pseudocode: Run SAST scan
+        # dotnet build /p:EnableNETAnalyzers=true /p:AnalysisMode=Recommended
+        echo "Running SAST scan..."
+
+    - name: Run Security Scans (SCA)
+      # Integrate Snyk or Dependency-Check
+      run: |
+        # Pseudocode: Run SCA scan
+        # snyk test
+        # dependency-check --scan . --format JUNIT --out .
+        echo "Running SCA scan..."
+
+    - name: Run Security Scans (DAST)
+      # This might require a running instance of the application
+      run: |
+        # Pseudocode: Set up and run DAST scan (e.g., OWASP ZAP)
+        echo "Running DAST scan..."
+
+    - name: Run Performance Benchmarks
+      # Use BenchmarkDotNet
+      run: |
+        # Pseudocode: Run performance benchmarks
+        # dotnet run -c Release -f netX.0 --project test/WalletFramework.PerformanceTests/WalletFramework.PerformanceTests.csproj
+        echo "Running performance benchmarks..."
+
+    - name: Collect and Report Code Coverage
+      # Use ReportGenerator to create human-readable reports
+      run: |
+        # Pseudocode: Generate coverage report
+        # dotnet tool install -g dotnet-reportgenerator-globaltool
+        # reportgenerator "-reports:**/coverage.opencover.xml" "-targetdir:coverage_report" "-reporttypes:Html"
+        echo "Collecting and reporting code coverage..."
+
+    - name: Upload Coverage Report Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: code-coverage-report
+        path: coverage_report # Path to the generated report
+
+    - name: Enforce Code Coverage Threshold
+      run: |
+        # Pseudocode: Check coverage percentage and fail if below threshold or if new code is not 100% covered
+        # Example: if coverage_percentage < minimum_threshold or new_code_coverage < 100 fail build
+        echo "Enforcing code coverage threshold..."
+
+    - name: Publish Test Results
+      # Publish test results to GitHub Actions
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: "**/*.trx" # Path to test results files
+
+    - name: Publish Security Scan Results
+      # Publish security scan results as artifacts or to a reporting tool
+      uses: actions/upload-artifact@v4
+      with:
+        name: security-scan-results
+        path: security_reports # Path to security reports
+
+    - name: Publish Performance Benchmark Results
+      # Publish performance benchmark results as artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: performance-benchmark-results
+        path: benchmark_results # Path to benchmark results
+
+    - name: Check for Security Vulnerabilities (CVE)
+      run: |
+        # Pseudocode: Check for critical/high CVEs and fail build if found
+        echo "Checking for security vulnerabilities..."
+
+    - name: Check SAST/DAST Compliance
+      run: |
+        # Pseudocode: Check SAST/DAST findings against compliance rules and fail build if non-compliant
+        echo "Checking SAST/DAST compliance..."
